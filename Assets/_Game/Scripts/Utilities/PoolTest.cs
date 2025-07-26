@@ -10,6 +10,6 @@ public class PoolTest : MonoBehaviour
 
     private void Start()
     {
-        _cardFactory.Create(new CardData("Heyy", new CardAttackData()));
+        _cardFactory.Create(new CardData("HHHHJ", new CardAttackData()));
     }
 }

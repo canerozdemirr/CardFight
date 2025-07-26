@@ -16,6 +16,9 @@ namespace _Game.Scripts.Installers
         private int _poolSize;
 
         [BoxGroup("Card Pool")] [SerializeField]
+        private int _maxPoolSize;
+
+        [BoxGroup("Card Pool")] [SerializeField]
         private Transform _cardPoolParent;
 
         public override void InstallBindings()
@@ -23,6 +26,7 @@ namespace _Game.Scripts.Installers
             Container.BindFactory<CardData, Card, CardFactory>()
                 .FromPoolableMemoryPool(poolBinder => poolBinder
                     .WithInitialSize(_poolSize)
+                    .WithMaxSize(_maxPoolSize)
                     .FromComponentInNewPrefab(_cardPrefab)
                     .UnderTransform(_cardPoolParent));
         }
