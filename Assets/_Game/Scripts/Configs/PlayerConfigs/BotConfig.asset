@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56854caaad60b649a1afe4d90124bb2, type: 3}
   m_Name: BotConfig
   m_EditorClassIdentifier: 
+  _cardPlayerData:
+    _playerOccupation: 1
   _cardPlayerHealthData:
     _playerHealth: 100

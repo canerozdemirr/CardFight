@@ -8,11 +8,9 @@ namespace _Game.Scripts.Configs.PlayerConfigs
     public class CardPlayerConfig : ScriptableObject
     {
         [SerializeField] private CardPlayerData _cardPlayerData;
-        
         public CardPlayerData CardPlayerData => _cardPlayerData;
         
         [SerializeField] private CardPlayerHealthData _cardPlayerHealthData;
-        
         public CardPlayerHealthData CardPlayerHealthData => _cardPlayerHealthData;
     }
 }

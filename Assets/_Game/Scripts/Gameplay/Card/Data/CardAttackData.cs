@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace _Game.Scripts.Gameplay.Card
+namespace _Game.Scripts.Gameplay.Card.Data
 {
     [Serializable]
     public struct CardAttackData

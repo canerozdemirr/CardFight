@@ -12,7 +12,7 @@ namespace _Game.Scripts.Gameplay.CardPlayers.Data
 
     public enum PlayerOccupation
     {
-        Player,
-        Bot
+        Player = 0,
+        Bot = 1
     }
 }
