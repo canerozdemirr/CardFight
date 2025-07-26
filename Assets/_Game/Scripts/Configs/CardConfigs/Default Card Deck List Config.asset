@@ -15,3 +15,11 @@ MonoBehaviour:
   _cardConfigList:
   - {fileID: 11400000, guid: 2cf795f3e3372cd4aaa600a700acf905, type: 2}
   - {fileID: 11400000, guid: 6273939cd69caf64f856910e25a22a43, type: 2}
+  - {fileID: 11400000, guid: bbb23f010280db84394716627e16e7cf, type: 2}
+  - {fileID: 11400000, guid: 0b03ad8be0f1de845a03061d9ad20eb9, type: 2}
+  - {fileID: 11400000, guid: 5b3bb090b1e8d3a458665701ef45a0bc, type: 2}
+  - {fileID: 11400000, guid: c3af39aaeda355e4a9a490a166180f4d, type: 2}
+  - {fileID: 11400000, guid: 257c34f5994615f47b5c60244110b698, type: 2}
+  - {fileID: 11400000, guid: 1af8d6ab5e991a7458d6ca3f0c3fff9b, type: 2}
+  - {fileID: 11400000, guid: 2dafde248208e2e44ae4282ffe606fff, type: 2}
+  - {fileID: 11400000, guid: 35951536baeae784e92b05b7fe2e4626, type: 2}

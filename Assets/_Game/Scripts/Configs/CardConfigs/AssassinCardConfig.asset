@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 517b42a811258804ea285f1b5ec6ceea, type: 3}
-  m_Name: MageCardConfig
+  m_Name: AssassinCardConfig
   m_EditorClassIdentifier: 
   _cardData:
-    _cardName: Mage
+    _cardName: Assassin
     _cardAttackData:
-      _attackPoint: 70
-      _defensePoint: 25
+      _attackPoint: 60
+      _defensePoint: 60
