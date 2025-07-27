@@ -7,6 +7,8 @@ TagManager:
   - ship
   - asteroid
   - Card
+  - BeginningDeckSpot
+  - SelectedDeckSpot
   layers:
   - Default
   - TransparentFX

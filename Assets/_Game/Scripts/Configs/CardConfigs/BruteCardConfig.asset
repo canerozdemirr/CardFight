@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BruteCardConfig
   m_EditorClassIdentifier: 
   _cardData:
-    _cardName: Necromancer
+    _cardName: Brute
     _cardAttackData:
       _attackPoint: 40
       _defensePoint: 100

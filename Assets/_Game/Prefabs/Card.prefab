@@ -273,7 +273,9 @@ GameObject:
   m_Component:
   - component: {fileID: 112971832828960590}
   - component: {fileID: 3079181563345390338}
+  - component: {fileID: 5001967480340686792}
   - component: {fileID: 6487934223144657318}
+  - component: {fileID: 7450957302607312072}
   m_Layer: 0
   m_Name: Card
   m_TagString: Card
@@ -291,7 +293,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 939052447609003969}
@@ -346,6 +348,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!50 &5001967480340686792
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201988869192}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &6487934223144657318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,11 +387,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609aa85a5e180364a8286d8e14b4c3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardData:
-    _cardName: 
-    _cardAttackData:
-      _attackPoint: 0
-      _defensePoint: 0
+  _cardVisualHandler: {fileID: 7450957302607312072}
+--- !u!114 &7450957302607312072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201988869192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2bb2600ff852d74a86b964760a3a1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameText: {fileID: 514951801389412365}
+  _attackText: {fileID: 4156199967291577641}
+  _defenseText: {fileID: 5155658862455470772}
 --- !u!1 &8295602206268077044
 GameObject:
   m_ObjectHideFlags: 0

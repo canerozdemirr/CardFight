@@ -1,0 +1,54 @@
+{
+    "name": "GameInput",
+    "maps": [
+        {
+            "name": "Card",
+            "id": "d50e26d6-6222-46eb-9934-a7be945e6592",
+            "actions": [
+                {
+                    "name": "PointerPosition",
+                    "type": "Value",
+                    "id": "9c6db4e3-5632-4844-b82b-c07804723c13",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PointerPress",
+                    "type": "Button",
+                    "id": "42d28486-d0a9-48e0-93af-d33bffd232b8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f91f5804-6955-44f5-aa3e-f7033e81c309",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b827829-8c3e-456f-9889-ea999a9325a4",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

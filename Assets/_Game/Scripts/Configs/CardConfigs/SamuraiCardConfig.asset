@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SamuraiCardConfig
   m_EditorClassIdentifier: 
   _cardData:
-    _cardName: Werewolf
+    _cardName: Samurai
     _cardAttackData:
       _attackPoint: 75
       _defensePoint: 50

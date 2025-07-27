@@ -1,6 +1,6 @@
 using System;
-using _Game.Scripts.Gameplay.Card;
 using _Game.Scripts.Gameplay.Card.Data;
+using _Game.Scripts.Gameplay.Cards;
 using Zenject;
 
 namespace _Game.Scripts.Factories

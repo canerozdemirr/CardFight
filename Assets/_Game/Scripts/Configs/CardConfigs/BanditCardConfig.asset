@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BanditCardConfig
   m_EditorClassIdentifier: 
   _cardData:
-    _cardName: Werewolf
+    _cardName: Bandit
     _cardAttackData:
       _attackPoint: 60
       _defensePoint: 40

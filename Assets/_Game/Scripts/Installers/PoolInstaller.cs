@@ -1,6 +1,6 @@
 using _Game.Scripts.Factories;
-using _Game.Scripts.Gameplay.Card;
 using _Game.Scripts.Gameplay.Card.Data;
+using _Game.Scripts.Gameplay.Cards;
 using NaughtyAttributes;
 using UnityEngine;
 using Zenject;
