@@ -1,43 +1,28 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using _Game.Scripts.Configs.CardConfigs;
 using _Game.Scripts.Events.Card;
-using _Game.Scripts.Factories;
 using _Game.Scripts.Gameplay.Cards;
-using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.GameObjects;
-using GenericEventBus;
 using UnityEngine;
-using Zenject;
 
-namespace _Game.Scripts.Gameplay.Deck
+namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 {
-    public class PlayerDeckBuilder : MonoBehaviour, IPlayerDeckSpawner
+    public sealed class PlayerDeckBuilder : BaseDeckBuilder
     {
-        [Inject]
-        private CardFactory _cardFactory;
-
-        [Inject] 
-        private CardListConfig _cardListConfig;
-
-        [Inject] 
-        private GenericEventBus<IEvent> _eventBus;
-        
         [SerializeField]
         private List<Transform> _cardSpawnPoints;
         
         [SerializeField]
         private List<Transform> _playerDeckPoints;
 
-        private List<Cards.Card> _cardList;
-
-        public void PrepareDeck()
+        public override void PrepareDeck()
         {
+            base.PrepareDeck();
             _eventBus.SubscribeTo<OnCardDropped>(OnCardDropped);
+            SpawnBeginningDeck();
         }
 
-        public void SpawnBeginningDeck()
+        private void SpawnBeginningDeck()
         {
             CardConfig cardConfig;
             _cardList = new List<Cards.Card>(_cardListConfig.CardConfigList.Length);
@@ -50,8 +35,9 @@ namespace _Game.Scripts.Gameplay.Deck
             }
         }
 
-        public void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             _eventBus.UnsubscribeFrom<OnCardDropped>(OnCardDropped);
         }
         
@@ -61,6 +47,18 @@ namespace _Game.Scripts.Gameplay.Deck
                 return;
 
             eventData.PickedCard.DropToDeckSlot();
+
+            switch (eventData.PickedCard.CardDeckCollisionHandler.CardDeckState)
+            {
+                case CardDeckState.InPlayerDeck:
+                    break;
+                case CardDeckState.InSelectingDeck:
+                    _deckController.AddCard(eventData.PickedCard);
+                    break;
+                case CardDeckState.InBeginningDeck:
+                    _deckController.RemoveCard(eventData.PickedCard);
+                    break;
+            }
         }
     }
 }

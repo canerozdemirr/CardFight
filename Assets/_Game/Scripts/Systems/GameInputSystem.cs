@@ -76,5 +76,15 @@ namespace _Game.Scripts.Systems
             _isDragging = false;
             _draggingCard = null;
         }
+
+        public void OpenInput()
+        {
+            _gameInput.Enable();
+        }
+
+        public void CloseInput()
+        {
+            _gameInput.Disable();
+        }
     }
 }
