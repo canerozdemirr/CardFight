@@ -1,6 +1,10 @@
 using System;
-using _Game.Scripts.Gameplay.Deck;
+using _Game.Scripts.Events.Card;
+using _Game.Scripts.Gameplay.Cards;
+using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.Systems;
+using _Game.Scripts.Utilities;
+using GenericEventBus;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -11,11 +15,16 @@ namespace _Game.Scripts.Systems
     public sealed class GameInputSystem : ICardInputSystem, IInitializable, IDisposable, ITickable
     {
         private GameInput _gameInput;
-        private Transform draggingCard;
+        private Card _draggingCard;
         private bool _isDragging;
         private Camera _mainCamera;
+
+        private LayerMask _cardLayer;
+
+        private readonly float _inputRadius = 0.5f;
         
-        private Vector3 _dragOffset;
+        [Inject]
+        private GenericEventBus<IEvent> _eventBus;
         
         public void Initialize()
         {
@@ -24,15 +33,16 @@ namespace _Game.Scripts.Systems
             _gameInput.Card.PointerPress.started += OnCardPointerPressed;
             _gameInput.Card.PointerPress.canceled += OnCardPointerPressStopped;
             _mainCamera = Camera.main;
+            _cardLayer = 1 << LayerMask.NameToLayer(Constants.CardLayerTag);
         }
         
         public void Tick()
         {
-            if (_isDragging && draggingCard != null)
+            if (_isDragging && _draggingCard != null)
             {
                 Vector2 screenPos = _gameInput.Card.PointerPosition.ReadValue<Vector2>();
-                Vector3 worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _mainCamera.nearClipPlane)); // 5f is distance from camera
-                draggingCard.position = new Vector3(worldPos.x, worldPos.y, draggingCard.position.z);
+                Vector3 worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -_mainCamera.transform.position.z));
+                _draggingCard.transform.position = new Vector2(worldPos.x, worldPos.y);
             }
         }
 
@@ -46,32 +56,25 @@ namespace _Game.Scripts.Systems
         private void OnCardPointerPressed(InputAction.CallbackContext obj)
         {
             Vector2 screenPos = _gameInput.Card.PointerPosition.ReadValue<Vector2>();
-            Vector3 worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _mainCamera.nearClipPlane));
-            RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+            Vector3 worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -_mainCamera.transform.position.z));
+            
+            RaycastHit2D hit = Physics2D.CircleCast(worldPos, _inputRadius, Vector2.zero, 0f, _cardLayer);
 
-            if (hit.collider != null)
-            {
-                draggingCard = hit.collider.transform;
-                _isDragging = true;
-                _dragOffset = draggingCard.position - worldPos;
-            }
+            if (hit.collider == null || !hit.collider.TryGetComponent(out Card pickedCard)) 
+                return;
+            
+            _draggingCard = pickedCard;
+            _isDragging = true;
         }
         
         private void OnCardPointerPressStopped(InputAction.CallbackContext obj)
         {
-            if (!_isDragging || draggingCard == null)
+            if (!_isDragging || _draggingCard == null)
                 return;
-
-            Vector2 screenPos = _gameInput.Card.PointerPosition.ReadValue<Vector2>();
-            Vector3 worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _mainCamera.nearClipPlane));
-            // RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
-
-            draggingCard.position = new Vector3(worldPos.x, worldPos.y, draggingCard.position.z);
-
-
-            _isDragging = false;
-            draggingCard = null;
             
+            _eventBus.Raise(new OnCardDropped(_draggingCard));
+            _isDragging = false;
+            _draggingCard = null;
         }
     }
 }

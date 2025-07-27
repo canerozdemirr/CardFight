@@ -9,8 +9,12 @@ namespace _Game.Scripts.Gameplay.Cards
     public class Card : MonoBehaviour, IDisposable, IPoolable<CardData, IMemoryPool>
     {
         [SerializeField] private CardVisualHandler _cardVisualHandler;
-        
+
+        [SerializeField] private CardDeckCollisionHandler _cardDeckCollisionHandler;
+
         private CardData _cardData;
+        
+        public CardDeckCollisionHandler CardDeckCollisionHandler => _cardDeckCollisionHandler;
 
         public void Dispose()
         {
@@ -31,10 +35,15 @@ namespace _Game.Scripts.Gameplay.Cards
 
         private void InitializeCard()
         {
-            if (_cardData == null) 
+            if (_cardData == null)
                 return;
-            
+
             _cardVisualHandler.InitializeVisuals(_cardData);
+        }
+
+        public void DropToDeckSlot()
+        {
+            transform.position = _cardDeckCollisionHandler.CollidedDeckSpot.transform.position;
         }
     }
 }

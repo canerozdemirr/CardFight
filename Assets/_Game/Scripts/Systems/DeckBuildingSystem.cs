@@ -13,6 +13,7 @@ namespace _Game.Scripts.Systems
         
         public void Initialize()
         {
+            _playerDeckSpawner.PrepareDeck();
             _playerDeckSpawner.SpawnBeginningDeck();
         }
 

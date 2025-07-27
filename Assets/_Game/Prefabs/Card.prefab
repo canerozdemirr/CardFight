@@ -276,7 +276,8 @@ GameObject:
   - component: {fileID: 5001967480340686792}
   - component: {fileID: 6487934223144657318}
   - component: {fileID: 7450957302607312072}
-  m_Layer: 0
+  - component: {fileID: 5210255500767686387}
+  m_Layer: 6
   m_Name: Card
   m_TagString: Card
   m_Icon: {fileID: 0}
@@ -388,6 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardVisualHandler: {fileID: 7450957302607312072}
+  _cardDeckCollisionHandler: {fileID: 5210255500767686387}
 --- !u!114 &7450957302607312072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,6 +405,18 @@ MonoBehaviour:
   _nameText: {fileID: 514951801389412365}
   _attackText: {fileID: 4156199967291577641}
   _defenseText: {fileID: 5155658862455470772}
+--- !u!114 &5210255500767686387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201988869192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ec3d888afb9e72459137ecdcfc1467a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8295602206268077044
 GameObject:
   m_ObjectHideFlags: 0

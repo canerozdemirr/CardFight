@@ -198,6 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 96930732}
   - component: {fileID: 96930733}
+  - component: {fileID: 96930734}
   m_Layer: 0
   m_Name: SelectedDeckSpot
   m_TagString: SelectedDeckSpot
@@ -266,6 +267,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &96930734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96930731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &189260474
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +370,13 @@ MonoBehaviour:
   - {fileID: 112971834121575029}
   - {fileID: 112971833661280206}
   - {fileID: 112971834394248280}
+  _playerDeckPoints:
+  - {fileID: 1417550247}
+  - {fileID: 685605104}
+  - {fileID: 435555948}
+  - {fileID: 96930732}
+  - {fileID: 1116195602}
+  - {fileID: 786693934}
 --- !u!1 &435555947
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 435555948}
   - component: {fileID: 435555949}
+  - component: {fileID: 435555950}
   m_Layer: 0
   m_Name: SelectedDeckSpot
   m_TagString: SelectedDeckSpot
@@ -435,6 +456,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &435555950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435555947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,7 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b398a15d75fa24ea266ff6d94c1054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerDeckSpawner: {fileID: 302155460}
+  playerDeckBuilder: {fileID: 302155460}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +744,7 @@ GameObject:
   m_Component:
   - component: {fileID: 685605104}
   - component: {fileID: 685605105}
+  - component: {fileID: 685605106}
   m_Layer: 0
   m_Name: SelectedDeckSpot
   m_TagString: SelectedDeckSpot
@@ -779,6 +813,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &685605106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685605103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &786693933
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 786693934}
   - component: {fileID: 786693935}
+  - component: {fileID: 786693936}
   m_Layer: 0
   m_Name: SelectedDeckSpot
   m_TagString: SelectedDeckSpot
@@ -857,6 +904,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &786693936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786693933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &868376900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,6 +1203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1116195602}
   - component: {fileID: 1116195603}
+  - component: {fileID: 1116195604}
   m_Layer: 0
   m_Name: SelectedDeckSpot
   m_TagString: SelectedDeckSpot
@@ -1212,6 +1272,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &1116195604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116195601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1216096651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1417550247}
   - component: {fileID: 1417550248}
+  - component: {fileID: 1417550249}
   m_Layer: 0
   m_Name: SelectedDeckSpot
   m_TagString: SelectedDeckSpot
@@ -1461,6 +1534,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &1417550249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417550246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1768028098
 GameObject:
   m_ObjectHideFlags: 0
@@ -2368,6 +2453,7 @@ GameObject:
   - component: {fileID: 112971834394248280}
   - component: {fileID: 3079181562872778772}
   - component: {fileID: 7356696200509626207}
+  - component: {fileID: 7356696200509626208}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -2430,6 +2516,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696200509626208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696200509626206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696200791107658
 GameObject:
   m_ObjectHideFlags: 0
@@ -2441,6 +2539,7 @@ GameObject:
   - component: {fileID: 112971834583464780}
   - component: {fileID: 3079181562684632832}
   - component: {fileID: 7356696200791107659}
+  - component: {fileID: 7356696200791107660}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -2503,6 +2602,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696200791107660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696200791107658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696200970491267
 GameObject:
   m_ObjectHideFlags: 0
@@ -2514,6 +2625,7 @@ GameObject:
   - component: {fileID: 112971833915590277}
   - component: {fileID: 3079181562259870409}
   - component: {fileID: 7356696200970491268}
+  - component: {fileID: 7356696200970491269}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -2576,6 +2688,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696200970491269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696200970491267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696201302296947
 GameObject:
   m_ObjectHideFlags: 0
@@ -2587,6 +2711,7 @@ GameObject:
   - component: {fileID: 112971834121575029}
   - component: {fileID: 3079181562054938169}
   - component: {fileID: 7356696201302296948}
+  - component: {fileID: 7356696201302296949}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -2649,6 +2774,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696201302296949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201302296947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696201429276595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2660,6 +2797,7 @@ GameObject:
   - component: {fileID: 112971834010256565}
   - component: {fileID: 3079181562177720569}
   - component: {fileID: 7356696201429276596}
+  - component: {fileID: 7356696201429276597}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -2722,6 +2860,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696201429276597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201429276595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696201465033830
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,6 +2883,7 @@ GameObject:
   - component: {fileID: 112971833370732384}
   - component: {fileID: 3079181563895264044}
   - component: {fileID: 7356696201465033831}
+  - component: {fileID: 7356696201465033832}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -2795,6 +2946,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696201465033832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201465033830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696201601825880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,6 +2969,7 @@ GameObject:
   - component: {fileID: 112971833234894686}
   - component: {fileID: 3079181564027894546}
   - component: {fileID: 7356696201601825881}
+  - component: {fileID: 7356696201601825882}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -2868,6 +3032,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696201601825882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201601825880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696201760562376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2879,6 +3055,7 @@ GameObject:
   - component: {fileID: 112971833661280206}
   - component: {fileID: 3079181563582618498}
   - component: {fileID: 7356696201760562377}
+  - component: {fileID: 7356696201760562378}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -2941,6 +3118,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696201760562378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201760562376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696201910126621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2952,6 +3141,7 @@ GameObject:
   - component: {fileID: 112971833513843483}
   - component: {fileID: 3079181563736411991}
   - component: {fileID: 7356696201910126622}
+  - component: {fileID: 7356696201910126623}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -3014,6 +3204,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696201910126623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696201910126621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7356696202333340940
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,6 +3227,7 @@ GameObject:
   - component: {fileID: 112971833039214090}
   - component: {fileID: 3079181563152958022}
   - component: {fileID: 7356696202333340941}
+  - component: {fileID: 7356696202333340942}
   m_Layer: 0
   m_Name: BeginningDeckSpot
   m_TagString: BeginningDeckSpot
@@ -3087,6 +3290,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7356696202333340942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7356696202333340940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae74adc85c06b84d83354af7c6be2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

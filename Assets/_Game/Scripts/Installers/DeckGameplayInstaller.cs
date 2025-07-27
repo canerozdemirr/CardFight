@@ -7,10 +7,10 @@ namespace _Game.Scripts.Installers
 {
     public class DeckGameplayInstaller : MonoInstaller
     {
-        [SerializeField] private PlayerDeckSpawner _playerDeckSpawner;
+        [SerializeField] private PlayerDeckBuilder playerDeckBuilder;
         public override void InstallBindings()
         {
-            Container.Bind<IPlayerDeckSpawner>().FromInstance(_playerDeckSpawner).AsSingle();
+            Container.Bind<IPlayerDeckSpawner>().FromInstance(playerDeckBuilder).AsSingle();
         }
     }
 }
