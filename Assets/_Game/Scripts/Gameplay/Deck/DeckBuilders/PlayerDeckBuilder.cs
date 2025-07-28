@@ -25,6 +25,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         {
             _eventBus.SubscribeTo<OnCardDropped>(OnCardDropped);
             SpawnBeginningDeck();
+            _playerDeck.PrepareDeck();
         }
 
         private void SpawnBeginningDeck()

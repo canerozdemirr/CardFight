@@ -7,6 +7,7 @@ using Zenject;
 
 namespace _Game.Scripts.Utilities.SubSystems
 {
+    [Serializable]
     public class CommandExecutor : ICommandExecutor
     {
         private readonly Queue<ICommand> _commandQueue = new();

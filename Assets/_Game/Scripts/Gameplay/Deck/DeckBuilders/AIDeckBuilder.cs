@@ -17,9 +17,6 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         [SerializeField]
         private Transform _spawnPoint;
 
-        [Inject] 
-        private CardListConfig _cardListConfig;
-
         private List<CardData> _unselectedCardDatas = new();
 
         private CancellationTokenSource _cancellationTokenSource;

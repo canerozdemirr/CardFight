@@ -392,7 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3aac034946553449b0d926e5c6382b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deckController: {fileID: 868376902}
   _cardSpawnPoints:
   - {fileID: 112971833915590277}
   - {fileID: 112971834583464780}
@@ -685,6 +684,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDeckBuilder: {fileID: 302155460}
   _aiDeckBuilder: {fileID: 1275986004}
+  _playerDeck: {fileID: 868376902}
+  _aiDeck: {fileID: 1674093582}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,7 +1365,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95928e56af5f41c4b70918d0a15ff79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deckController: {fileID: 1674093582}
   _spawnPoint: {fileID: 875856455}
 --- !u!1 &1340629343
 GameObject:

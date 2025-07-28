@@ -1,5 +1,6 @@
 using System;
 using _Game.Scripts.Commands.DeckCommands;
+using _Game.Scripts.Commands.InputCommands;
 using _Game.Scripts.Gameplay.Deck.DeckBuilders;
 using _Game.Scripts.Interfaces.Commands;
 using _Game.Scripts.Interfaces.GameObjects;
@@ -21,12 +22,13 @@ namespace _Game.Scripts.Systems
         [Inject]
         private DiContainer _container;
         
-        private ICommandExecutor _commandExecutor;
+        private ICommandExecutor _deckBuildingCommandExecutor;
         
         public void Initialize()
         {
-            _commandExecutor = new CommandExecutor(_container);
+            _deckBuildingCommandExecutor = new CommandExecutor(_container);
             AddCommands();
+            _deckBuildingCommandExecutor.ExecuteCommands();
         }
         
         public void Dispose()
@@ -36,10 +38,11 @@ namespace _Game.Scripts.Systems
 
         private void AddCommands()
         {
-            _commandExecutor.Enqueue(new StartAIDeckBuildCommand());
-            _commandExecutor.Enqueue(new AwaitAIDeckBuildCommand());
-            _commandExecutor.Enqueue(new StartPlayerDeckBuildCommand());
-            _commandExecutor.Enqueue(new AwaitPlayerDeckBuildCommand());
+            _deckBuildingCommandExecutor.Enqueue(new StartAIDeckBuildCommand());
+            _deckBuildingCommandExecutor.Enqueue(new AwaitAIDeckBuildCommand());
+            _deckBuildingCommandExecutor.Enqueue(new StartPlayerDeckBuildCommand());
+            _deckBuildingCommandExecutor.Enqueue(new AwaitPlayerDeckBuildCommand());
+            _deckBuildingCommandExecutor.Enqueue(new DisableInputCommand());
         }
     }
 }

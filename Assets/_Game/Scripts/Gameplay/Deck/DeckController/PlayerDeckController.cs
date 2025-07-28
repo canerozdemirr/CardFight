@@ -10,8 +10,14 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
     {
         [Inject] 
         private GenericEventBus<IEvent> _eventBus;
+
         public bool IsDeckSelected => _cardList.Count == _totalCardCount;
-        
+
+        public void PrepareDeck()
+        {
+            Initialize();
+        }
+
         public override void AddCard(Cards.Card card)
         {
             base.AddCard(card);
