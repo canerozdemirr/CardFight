@@ -20,6 +20,7 @@ namespace _Game.Scripts.UI
         {
             _eventBus.SubscribeTo<OnPlayerCardAddedToDeck>(OnPlayerCardAddedToDeck);
             _eventBus.SubscribeTo<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
+            _playButton.onClick.AddListener(StartTheGame);
         }
 
         private void OnDisable()
@@ -40,9 +41,9 @@ namespace _Game.Scripts.UI
                 _playButton.gameObject.SetActive(true);
         }
 
-        public void StartTheGame()
+        private void StartTheGame()
         {
-            
+            _eventBus.Raise(new OnDeckBuildingEnded());
         }
     }
 }

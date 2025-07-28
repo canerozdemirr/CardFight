@@ -24,8 +24,6 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
 
         protected int _totalCardCount;
         
-        public bool IsDeckCompleted => _cardList.Count >= _totalCardCount;
-        
         public virtual void Initialize()
         {
             foreach (CardPlayerConfig cardPlayerConfig in _cardPlayerListConfig.CardPlayerConfigs)

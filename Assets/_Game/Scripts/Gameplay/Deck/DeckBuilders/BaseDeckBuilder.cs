@@ -12,9 +12,6 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 {
     public abstract class BaseDeckBuilder : MonoBehaviour
     {
-        [SerializeField]
-        protected BaseDeckController _deckController;
-        
         [Inject]
         protected CardFactory _cardFactory;
         
@@ -25,15 +22,5 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         protected GenericEventBus<IEvent> _eventBus;
         
         protected List<Cards.Card> _cardList;
-        
-        public virtual void PrepareDeck()
-        {
-            _deckController.Initialize();
-        }
-
-        protected virtual void OnDisable()
-        {
-            
-        }
     }
 }

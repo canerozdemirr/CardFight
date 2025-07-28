@@ -4,13 +4,15 @@ using _Game.Scripts.Configs.CardConfigs;
 using _Game.Scripts.Configs.PlayerConfigs;
 using _Game.Scripts.Gameplay.Card.Data;
 using _Game.Scripts.Gameplay.CardPlayers.Data;
+using _Game.Scripts.Interfaces.Deck;
+using _Game.Scripts.Interfaces.Players;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 {
-    public class AIDeckBuilder : BaseDeckBuilder
+    public class AIDeckBuilder : BaseDeckBuilder, IAIDeckBuilder
     {
         [SerializeField]
         private Transform _spawnPoint;
@@ -22,16 +24,18 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        public override void PrepareDeck()
+        [Inject] 
+        protected IAIDeck _aiDeck;
+
+        public void PrepareAIDeck()
         {
-            base.PrepareDeck();
             _unselectedCardDatas = new List<CardData>(_cardListConfig.CardConfigList.Length);
             
             foreach (CardConfig cardConfig in _cardListConfig.CardConfigList)
             {
                 _unselectedCardDatas.Add(cardConfig.CardData);
             }
-            
+            _aiDeck.PrepareDeck();
             StartPickingCards();
         }
         
@@ -43,21 +47,21 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         
         private async UniTask PickCardsTask(CancellationToken cancellationToken)
         {
-            while (!_deckController.IsDeckCompleted)
+            while (!_aiDeck.IsDeckSelected)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 
                 int randomIndex = Random.Range(0, _unselectedCardDatas.Count - 1);
                 CardData selectedCardData = _unselectedCardDatas[randomIndex];
                 Cards.Card spawnedCard = _cardFactory.Create(selectedCardData);
-                _deckController.AddCard(spawnedCard);
+                _aiDeck.AddCardToDeck(spawnedCard);
                 spawnedCard.transform.position = _spawnPoint.position;
                 
                 await UniTask.WaitForEndOfFrame(cancellationToken);
             }
         }
         
-        protected override void OnDisable()
+        private void OnDisable()
         {
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource?.Dispose();

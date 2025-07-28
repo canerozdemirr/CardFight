@@ -2,12 +2,15 @@ using System.Collections.Generic;
 using _Game.Scripts.Configs.CardConfigs;
 using _Game.Scripts.Events.Card;
 using _Game.Scripts.Gameplay.Cards;
+using _Game.Scripts.Interfaces.Deck;
 using _Game.Scripts.Interfaces.GameObjects;
+using _Game.Scripts.Interfaces.Players;
 using UnityEngine;
+using Zenject;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 {
-    public sealed class PlayerDeckBuilder : BaseDeckBuilder
+    public sealed class PlayerDeckBuilder : BaseDeckBuilder, IPlayerDeckBuilder
     {
         [SerializeField]
         private List<Transform> _cardSpawnPoints;
@@ -15,9 +18,11 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         [SerializeField]
         private List<Transform> _playerDeckPoints;
 
-        public override void PrepareDeck()
+        [Inject] 
+        private IPlayerDeck _playerDeck;
+
+        public void PreparePlayerDeck()
         {
-            base.PrepareDeck();
             _eventBus.SubscribeTo<OnCardDropped>(OnCardDropped);
             SpawnBeginningDeck();
         }
@@ -35,9 +40,8 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
             }
         }
 
-        protected override void OnDisable()
+        private void OnDisable()
         {
-            base.OnDisable();
             _eventBus.UnsubscribeFrom<OnCardDropped>(OnCardDropped);
         }
         
@@ -53,10 +57,10 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
                 case CardDeckState.InPlayerDeck:
                     break;
                 case CardDeckState.InSelectingDeck:
-                    _deckController.AddCard(eventData.PickedCard);
+                    _playerDeck.AddCard(eventData.PickedCard);
                     break;
                 case CardDeckState.InBeginningDeck:
-                    _deckController.RemoveCard(eventData.PickedCard);
+                    _playerDeck.RemoveCard(eventData.PickedCard);
                     break;
             }
         }
