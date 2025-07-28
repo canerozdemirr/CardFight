@@ -22,48 +22,22 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         [Inject] 
         protected CardPlayerListConfig _cardPlayerListConfig;
 
-        protected int _totalCardCount;
-        
-        public virtual void Initialize()
+        protected CardPlayerData _cardPlayerData;
+        protected CardPlayerHealthData _cardPlayerHealthData;
+        protected PlayerTurnData _playerTurnData;
+
+        protected virtual void Initialize()
         {
             foreach (CardPlayerConfig cardPlayerConfig in _cardPlayerListConfig.CardPlayerConfigs)
             {
                 if (cardPlayerConfig.CardPlayerData.PlayerOccupation != _playerOccupation) 
                     continue;
                 
-                _totalCardCount = cardPlayerConfig.CardPlayerData.TotalCardCount;
-                break;
+                _cardPlayerData = cardPlayerConfig.CardPlayerData;
+                _cardPlayerHealthData = cardPlayerConfig.CardPlayerHealthData;
+                _playerTurnData = cardPlayerConfig.PlayerTurnData;
             }
-            _cardList = new List<Cards.Card>(_totalCardCount);
-        }
-
-        public virtual void AddCard(Cards.Card card)
-        {
-            if (!_cardList.Contains(card))
-            {
-                _cardList.Add(card);
-            }
-            else
-            {
-                Debug.LogWarning($"Card {card.name} is already in the deck.");
-            }
-        }
-
-        public virtual void RemoveCard(Cards.Card card)
-        {
-            if (_cardList.Contains(card))
-            {
-                _cardList.Remove(card);
-            }
-            else
-            {
-                Debug.LogWarning($"Card {card.name} not found in the deck.");
-            }
-        }
-        
-        public virtual void PlayCard()
-        {
-            
+            _cardList = new List<Cards.Card>(_cardPlayerData.TotalCardCount);
         }
     }
 }

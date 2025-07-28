@@ -17,3 +17,5 @@ MonoBehaviour:
     _totalCardCount: 6
   _cardPlayerHealthData:
     _playerHealth: 100
+  _playerTurnData:
+    turnDurationInSeconds: 30

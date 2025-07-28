@@ -22,7 +22,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         private CancellationTokenSource _cancellationTokenSource;
 
         [Inject] 
-        protected IAIDeck _aiDeck;
+        private IAIDeck _aiDeck;
 
         public void PrepareAIDeck()
         {

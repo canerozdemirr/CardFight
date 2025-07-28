@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using _Game.Scripts.Gameplay.CardPlayers.Data;
 using _Game.Scripts.Gameplay.Cards;
+using Cysharp.Threading.Tasks;
 
 namespace _Game.Scripts.Interfaces.Players
 {
@@ -9,6 +11,10 @@ namespace _Game.Scripts.Interfaces.Players
 
         void PrepareDeck();
         void AddCardToDeck(Card card);
-        void RemoveCardToDeck(Card card);
+        void RemoveCardFromDeck(Card card);
+        UniTask PlayCard();
+   
+        PlayerTurnData PlayerTurnData { get; }
+        CardPlayerHealthData CardPlayerHealthData { get; }
     }
 }

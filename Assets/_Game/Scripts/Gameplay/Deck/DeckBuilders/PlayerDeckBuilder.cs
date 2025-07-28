@@ -55,15 +55,25 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 
             switch (eventData.PickedCard.CardDeckCollisionHandler.CardDeckState)
             {
-                case CardDeckState.InPlayerDeck:
-                    break;
                 case CardDeckState.InSelectingDeck:
                     _playerDeck.AddCard(eventData.PickedCard);
+                    _cardList.Remove(eventData.PickedCard);
                     break;
                 case CardDeckState.InBeginningDeck:
                     _playerDeck.RemoveCard(eventData.PickedCard);
+                    _cardList.Add(eventData.PickedCard);
                     break;
             }
+        }
+        
+        public void ClearUnusedCards()
+        {
+            for (int i = _cardList.Count - 1; i >= 0; i--)
+            {
+                Cards.Card unusedCard = _cardList[i];
+                unusedCard.ReturnToPool();
+            }
+            _cardList.Clear();
         }
     }
 }

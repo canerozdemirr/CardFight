@@ -43,6 +43,7 @@ namespace _Game.Scripts.Systems
             _deckBuildingCommandExecutor.Enqueue(new StartPlayerDeckBuildCommand());
             _deckBuildingCommandExecutor.Enqueue(new AwaitPlayerDeckBuildCommand());
             _deckBuildingCommandExecutor.Enqueue(new DisableInputCommand());
+            _deckBuildingCommandExecutor.Enqueue(new AwaitPlayerArrangeDeckCommand());
         }
     }
 }

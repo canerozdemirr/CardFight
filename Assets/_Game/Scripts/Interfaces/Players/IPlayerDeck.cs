@@ -1,4 +1,6 @@
+using _Game.Scripts.Gameplay.CardPlayers.Data;
 using _Game.Scripts.Gameplay.Cards;
+using Cysharp.Threading.Tasks;
 
 namespace _Game.Scripts.Interfaces.Players
 {
@@ -8,5 +10,11 @@ namespace _Game.Scripts.Interfaces.Players
         void PrepareDeck();
         void AddCard(Card card);
         void RemoveCard(Card card);
+        UniTask ArrangeDeck();
+        
+        void PlayCard(Card card);
+
+        PlayerTurnData PlayerTurnData { get; }
+        CardPlayerHealthData CardPlayerHealthData { get; }
     }
 }

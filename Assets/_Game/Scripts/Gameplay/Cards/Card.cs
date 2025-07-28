@@ -13,6 +13,7 @@ namespace _Game.Scripts.Gameplay.Cards
         [SerializeField] private CardDeckCollisionHandler _cardDeckCollisionHandler;
 
         private CardData _cardData;
+        private IMemoryPool _memoryPool;
         
         public CardDeckCollisionHandler CardDeckCollisionHandler => _cardDeckCollisionHandler;
 
@@ -30,7 +31,14 @@ namespace _Game.Scripts.Gameplay.Cards
         public void OnSpawned(CardData cardData, IMemoryPool memoryPool)
         {
             _cardData = cardData;
+            _memoryPool = memoryPool;
+            gameObject.SetActive(true);
             InitializeCard();
+        }
+
+        public void ReturnToPool()
+        {
+            _memoryPool?.Despawn(this);
         }
 
         private void InitializeCard()

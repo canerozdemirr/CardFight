@@ -6,6 +6,6 @@ namespace _Game.Scripts.Interfaces.Systems
     {
         void StartTurn();
         void EndTurn();
-        PlayerOccupation CurrentPlayerOccupation { get; }
+        PlayerOccupation CurrentPlayerOccupationToPlay { get; }
     }
 }

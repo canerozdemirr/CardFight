@@ -12,5 +12,8 @@ namespace _Game.Scripts.Configs.PlayerConfigs
         
         [SerializeField] private CardPlayerHealthData _cardPlayerHealthData;
         public CardPlayerHealthData CardPlayerHealthData => _cardPlayerHealthData;
+
+        [SerializeField] private PlayerTurnData _playerTurnData;
+        public PlayerTurnData PlayerTurnData => _playerTurnData;
     }
 }

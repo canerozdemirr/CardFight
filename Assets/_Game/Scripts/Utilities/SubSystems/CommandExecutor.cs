@@ -12,6 +12,9 @@ namespace _Game.Scripts.Utilities.SubSystems
     {
         private readonly Queue<ICommand> _commandQueue = new();
         private readonly DiContainer _container;
+        
+        private int _totalCommandsExecuted;
+        private int _currentCommandIndex;
 
         public CommandExecutor()
         {
@@ -34,7 +37,7 @@ namespace _Game.Scripts.Utilities.SubSystems
             _commandQueue.Enqueue(command);
         }
 
-        public async UniTask ExecuteCommands()
+        public async UniTask ExecuteCommands(bool clearQueueInTheEnd = true)
         {
             if (_commandQueue.Count == 0)
             {
@@ -42,36 +45,37 @@ namespace _Game.Scripts.Utilities.SubSystems
                 return;
             }
 
-            int executedCommands = 0;
-            int totalCommands = _commandQueue.Count;
-            
+            _currentCommandIndex = 0;
+            _totalCommandsExecuted = _commandQueue.Count;
+
             try
             {
                 while (_commandQueue.Count > 0)
                 {
-                    var command = _commandQueue.Dequeue();
-                    
+                    ICommand command = _commandQueue.Dequeue();
+
                     if (command == null)
                     {
-                        Debug.LogError($"Null command found at index {executedCommands}. Skipping...");
-                        executedCommands++;
+                        Debug.LogError($"Null command found at index {_currentCommandIndex}. Skipping...");
+                        _currentCommandIndex++;
                         continue;
                     }
 
                     try
                     {
                         await command.Execute();
-                        executedCommands++;
+                        _currentCommandIndex++;
                     }
                     catch (Exception commandException)
                     {
-                        Debug.LogError($"Command execution failed at index {executedCommands}: {commandException.Message}");
+                        Debug.LogError(
+                            $"Command execution failed at index {_currentCommandIndex}: {commandException.Message}");
                         Debug.LogException(commandException);
-                        executedCommands++;
+                        _currentCommandIndex++;
                     }
                 }
-                
-                Debug.Log($"Successfully executed {executedCommands}/{totalCommands} commands");
+
+                Debug.Log($"Successfully executed {_currentCommandIndex}/{_totalCommandsExecuted} commands");
             }
             catch (Exception generalException)
             {
@@ -79,6 +83,13 @@ namespace _Game.Scripts.Utilities.SubSystems
                 Debug.LogException(generalException);
                 _commandQueue.Clear();
                 throw;
+            }
+            finally
+            {
+                _currentCommandIndex = 0;
+                _totalCommandsExecuted = 0;
+                if (clearQueueInTheEnd)
+                    _commandQueue.Clear();
             }
         }
     }

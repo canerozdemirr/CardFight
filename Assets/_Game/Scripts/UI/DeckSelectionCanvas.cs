@@ -34,6 +34,7 @@ namespace _Game.Scripts.UI
         {
             _eventBus.UnsubscribeFrom<OnPlayerCardAddedToDeck>(OnPlayerCardAddedToDeck);
             _eventBus.UnsubscribeFrom<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
+            _playButton.onClick.RemoveAllListeners();
         }
 
         private void OnPlayerCardRemovedFromDeck(ref OnPlayerCardRemovedFromDeck eventData)
@@ -54,6 +55,7 @@ namespace _Game.Scripts.UI
         private void StartTheGame()
         {
             _eventBus.Raise(new OnDeckBuildingEnded());
+            _playButton.gameObject.SetActive(false);
         }
     }
 }

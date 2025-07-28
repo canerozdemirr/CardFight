@@ -12,6 +12,8 @@ namespace _Game.Scripts.Gameplay.Cards
         private readonly List<DeckSpot> _collidingDeckSpots = new();
 
         public DeckSpot CollidedDeckSpot { get; private set; }
+        
+        private DeckSpot _defaultDeckSpot;
 
         public CardDeckState CardDeckState { get; private set; }
 
@@ -20,11 +22,17 @@ namespace _Game.Scripts.Gameplay.Cards
             if (!other.gameObject.TryGetComponent(out DeckSpot deckSpot))
                 return;
 
-            if (!deckSpot.IsSpotEmpty)
+            if (!deckSpot.IsSpotEmpty || _collidingDeckSpots.Contains(deckSpot))
+            {
+                CollidedDeckSpot = _defaultDeckSpot;
                 return;
+            }
 
-            if (_collidingDeckSpots.Contains(deckSpot)) 
-                return;
+            if (_defaultDeckSpot == null)
+            {
+                _defaultDeckSpot = deckSpot;
+                CollidedDeckSpot = _defaultDeckSpot;
+            }
             
             _collidingDeckSpots.Add(deckSpot);
             UpdateClosestDeckSpot();
@@ -46,7 +54,7 @@ namespace _Game.Scripts.Gameplay.Cards
         {
             if (_collidingDeckSpots.Count == 0)
             {
-                CollidedDeckSpot = null;
+                CollidedDeckSpot = _defaultDeckSpot;
                 CardDeckState = default;
                 return;
             }
