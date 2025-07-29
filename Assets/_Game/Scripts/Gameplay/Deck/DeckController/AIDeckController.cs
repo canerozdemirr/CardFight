@@ -15,8 +15,6 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
 
         [SerializeField] 
         private DeckSpot _playingDeckSpot;
-        
-        public PlayerOccupation CurrentPlayerOccupationToPlay { get; }
         public PlayerTurnData PlayerTurnData => _playerTurnData;
         public CardPlayerHealthData CardPlayerHealthData => _cardPlayerHealthData;
         
@@ -52,6 +50,9 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
 
         public async UniTask PlayCard()
         {
+            int randomSecondDelay = Random.Range(0, _playerTurnData.turnDurationInSeconds);
+            await UniTask.WaitForSeconds(randomSecondDelay);
+            
             Cards.Card pickedCard = _cardPickStrategy.PickACard(_cardList);
             if (pickedCard != null)
             {

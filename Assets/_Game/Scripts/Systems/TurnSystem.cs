@@ -10,6 +10,7 @@ using _Game.Scripts.Interfaces.Commands;
 using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.Players;
 using _Game.Scripts.Interfaces.Systems;
+using _Game.Scripts.Utilities.SubSystems;
 using GenericEventBus;
 using UnityEngine.UIElements;
 using Zenject;
@@ -20,11 +21,12 @@ namespace _Game.Scripts.Systems
     public class TurnSystem : ITurnSystem, IInitializable, IDisposable
     {
         [Inject] private GenericEventBus<IEvent> _eventBus;
-        
-        public PlayerOccupation CurrentPlayerOccupationToPlay { get; }
 
         [Inject] private IPlayerDeck _playerDeck;
         [Inject] private IAIDeck _aiDeck;
+        
+        [Inject]
+        private DiContainer _container;
 
         private int _currentTurnCount;
         
@@ -34,6 +36,9 @@ namespace _Game.Scripts.Systems
         public void Initialize()
         {
             _currentTurnCount = UnityEngine.Random.Range(0, 2);
+            _playerTurnCommandExecutor = new CommandExecutor(_container);
+            _aiTurnCommandExecutor = new CommandExecutor(_container);
+            
             FillAITurnCommands();
             FillPlayerPlayTurnCommands();
         }

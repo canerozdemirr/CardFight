@@ -14,11 +14,8 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
     public sealed class PlayerDeckController : BaseDeckController, IPlayerDeck
     {
         [Inject] private GenericEventBus<IEvent> _eventBus;
-        
-        public PlayerOccupation CurrentPlayerOccupationToPlay { get; }
         public PlayerTurnData PlayerTurnData => _playerTurnData;
         public CardPlayerHealthData CardPlayerHealthData => _cardPlayerHealthData;
-
         public bool IsDeckSelected => _cardList.Count == _cardPlayerData.TotalCardCount;
 
         public void PrepareDeck()
@@ -28,7 +25,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
 
         protected override void Initialize()
         {
-            
+            base.Initialize();
         }
 
         public void AddCard(Cards.Card card)

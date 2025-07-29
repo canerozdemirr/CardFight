@@ -3,6 +3,7 @@ using _Game.Scripts.Events.Skill;
 using _Game.Scripts.Events.Turn;
 using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.Systems;
+using _Game.Scripts.Interfaces.UI;
 using GenericEventBus;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,7 @@ using Zenject;
 
 namespace _Game.Scripts.UI
 {
-    public class TurnCanvas : MonoBehaviour
+    public class TurnCanvas : MonoBehaviour, IUIElement
     {
         [SerializeField] private Button _endTurnButton;
         [SerializeField] private Button _skillButton;
@@ -24,11 +25,6 @@ namespace _Game.Scripts.UI
 
         private void OnEnable()
         {
-            _endTurnButton.gameObject.SetActive(false);
-            _skillButton.gameObject.SetActive(true);
-            _endTurnButton.onClick.AddListener(OnEndTurnButtonClicked);
-            _skillButton.onClick.AddListener(OnSkillUsed);
-            
             _eventBus.SubscribeTo<OnPlayerCardPlayed>(OnPlayerCardPlayed);
             _eventBus.SubscribeTo<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
             
@@ -37,13 +33,38 @@ namespace _Game.Scripts.UI
 
         private void OnDisable()
         {
-            _endTurnButton.onClick.RemoveAllListeners();
-            _skillButton.onClick.RemoveAllListeners();
-            
             _eventBus.UnsubscribeFrom<OnPlayerCardPlayed>(OnPlayerCardPlayed);
             _eventBus.UnsubscribeFrom<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
             
             _timeSystem.OnSecondElapsed -= OnSecondElapsed;
+        }
+        
+        public void Show()
+        {
+            _endTurnButton.gameObject.SetActive(false);
+            _skillButton.gameObject.SetActive(true);
+            gameObject.SetActive(true);
+            
+            _endTurnButton.onClick.AddListener(OnEndTurnButtonClicked);
+            _skillButton.onClick.AddListener(OnSkillUsed);
+        }
+
+        public void Hide()
+        {
+            _endTurnButton.onClick.RemoveAllListeners();
+            _skillButton.onClick.RemoveAllListeners();
+            gameObject.SetActive(false);
+        }
+
+        public bool IsVisible => gameObject.activeSelf;
+        public void Initialize()
+        {
+            
+        }
+
+        public void Cleanup()
+        {
+            
         }
 
         private void OnSkillUsed()

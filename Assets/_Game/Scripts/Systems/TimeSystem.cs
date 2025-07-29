@@ -24,8 +24,6 @@ namespace _Game.Scripts.Systems
         private float _lastSecondTime;
         
         public event Action<int> OnSecondElapsed;
-
-        private Dictionary<PlayerOccupation, int> _playerTurnDurationList;
         
         public void Initialize()
         {
@@ -33,7 +31,6 @@ namespace _Game.Scripts.Systems
             _currentTime = 0f;
             _timerDuration = 0;
             _lastSecondTime = 0f;
-            _playerTurnDurationList = new Dictionary<PlayerOccupation, int>();
         }
 
         public void StartTimer(int duration)
