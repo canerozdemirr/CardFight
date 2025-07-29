@@ -10,17 +10,17 @@ namespace _Game.Scripts.Systems
     {
         public void ResolveCombat(Card playerCard, Card botCard)
         {
-            
+
         }
 
         public void Initialize()
         {
-            
+
         }
 
         public void Dispose()
         {
-            
+
         }
     }
 }

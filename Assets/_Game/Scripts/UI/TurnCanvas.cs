@@ -22,22 +22,6 @@ namespace _Game.Scripts.UI
         [Inject] private GenericEventBus<IEvent> _eventBus;
 
         [Inject] private ITimeSystem _timeSystem;
-
-        private void OnEnable()
-        {
-            _eventBus.SubscribeTo<OnPlayerCardPlayed>(OnPlayerCardPlayed);
-            _eventBus.SubscribeTo<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
-            
-            _timeSystem.OnSecondElapsed += OnSecondElapsed;
-        }
-
-        private void OnDisable()
-        {
-            _eventBus.UnsubscribeFrom<OnPlayerCardPlayed>(OnPlayerCardPlayed);
-            _eventBus.UnsubscribeFrom<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
-            
-            _timeSystem.OnSecondElapsed -= OnSecondElapsed;
-        }
         
         public void Show()
         {
@@ -59,12 +43,18 @@ namespace _Game.Scripts.UI
         public bool IsVisible => gameObject.activeSelf;
         public void Initialize()
         {
+            _eventBus.SubscribeTo<OnPlayerCardPlayed>(OnPlayerCardPlayed);
+            _eventBus.SubscribeTo<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
             
+            _timeSystem.OnSecondElapsed += OnSecondElapsed;
         }
 
         public void Cleanup()
         {
+            _eventBus.UnsubscribeFrom<OnPlayerCardPlayed>(OnPlayerCardPlayed);
+            _eventBus.UnsubscribeFrom<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
             
+            _timeSystem.OnSecondElapsed -= OnSecondElapsed;
         }
 
         private void OnSkillUsed()

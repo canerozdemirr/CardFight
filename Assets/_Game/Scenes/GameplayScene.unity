@@ -1776,7 +1776,7 @@ MonoBehaviour:
   _deckPoints: []
   _cardPickStrategy:
     rid: 9211739858115756149
-  _playingDeckSpot: {fileID: 0}
+  _playingDeckSpot: {fileID: 87340876}
   references:
     version: 2
     RefIds:
@@ -2888,10 +2888,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7891237212968649350, guid: c2462be5582f7a1419d92a81eb15f183, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 3485168199868065963, guid: c2462be5582f7a1419d92a81eb15f183, type: 3}
+      propertyPath: _playDeck
+      value: 
+      objectReference: {fileID: 1941313321}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

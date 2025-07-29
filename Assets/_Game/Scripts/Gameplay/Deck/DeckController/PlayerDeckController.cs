@@ -7,6 +7,7 @@ using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.Players;
 using Cysharp.Threading.Tasks;
 using GenericEventBus;
+using UnityEngine;
 using Zenject;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckController

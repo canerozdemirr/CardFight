@@ -14,15 +14,21 @@ namespace _Game.Scripts.UI
 
         private Dictionary<Type, Canvas> _canvasByType;
         
+        private HashSet<IUIElement> _allUIElements;
+        
         public void Initialize()
         {
+            _allUIElements = new HashSet<IUIElement>(_canvases.Capacity);
             InitializeCanvasDictionaries();
             InitializeCanvases();
         }
 
         public void Dispose()
         {
-            
+            foreach (IUIElement uiElement in _allUIElements)
+            {
+                uiElement.Cleanup();
+            }
         }
 
         private void InitializeCanvasDictionaries()
@@ -50,6 +56,7 @@ namespace _Game.Scripts.UI
                 if (uiElement != null)
                 {
                     uiElement.Initialize();
+                    _allUIElements.Add(uiElement);
                 }
                 else
                 {
@@ -60,10 +67,10 @@ namespace _Game.Scripts.UI
 
         public void OpenUI<T>() where T : MonoBehaviour, IUIElement
         {
-            var canvas = GetCanvasByType<T>();
+            Canvas canvas = GetCanvasByType<T>();
             if (canvas != null)
             {
-                var uiElement = canvas.GetComponent<T>();
+                T uiElement = canvas.GetComponent<T>();
                 if (uiElement != null)
                 {
                     uiElement.Show();
@@ -81,10 +88,10 @@ namespace _Game.Scripts.UI
 
         public void CloseUI<T>() where T : MonoBehaviour, IUIElement
         {
-            var canvas = GetCanvasByType<T>();
+            Canvas canvas = GetCanvasByType<T>();
             if (canvas != null)
             {
-                var uiElement = canvas.GetComponent<T>();
+                T uiElement = canvas.GetComponent<T>();
                 if (uiElement != null)
                 {
                     uiElement.Hide();

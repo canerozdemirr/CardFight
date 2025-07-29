@@ -1,6 +1,7 @@
 using System;
 using _Game.Scripts.Commands.DeckCommands;
 using _Game.Scripts.Commands.InputCommands;
+using _Game.Scripts.Commands.TurnCommands;
 using _Game.Scripts.Gameplay.Deck.DeckBuilders;
 using _Game.Scripts.Interfaces.Commands;
 using _Game.Scripts.Interfaces.GameObjects;
@@ -44,6 +45,7 @@ namespace _Game.Scripts.Systems
             _deckBuildingCommandExecutor.Enqueue(new AwaitPlayerDeckBuildCommand());
             _deckBuildingCommandExecutor.Enqueue(new DisableInputCommand());
             _deckBuildingCommandExecutor.Enqueue(new AwaitPlayerArrangeDeckCommand());
+            _deckBuildingCommandExecutor.Enqueue(new StartGameplayCommand());
         }
     }
 }
