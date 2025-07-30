@@ -47,6 +47,7 @@ namespace _Game.Scripts.UI
             _eventBus.SubscribeTo<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
             
             _timeSystem.OnSecondElapsed += OnSecondElapsed;
+            Hide();
         }
 
         public void Cleanup()

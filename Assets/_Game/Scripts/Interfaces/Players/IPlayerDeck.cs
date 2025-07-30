@@ -11,8 +11,6 @@ namespace _Game.Scripts.Interfaces.Players
         void AddCard(Card card);
         void RemoveCard(Card card);
         UniTask ArrangeDeck();
-        
-        void PlayCard(Card card);
 
         PlayerTurnData PlayerTurnData { get; }
         CardPlayerHealthData CardPlayerHealthData { get; }

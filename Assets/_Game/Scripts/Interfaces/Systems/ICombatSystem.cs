@@ -2,8 +2,11 @@ using _Game.Scripts.Gameplay.Cards;
 
 namespace _Game.Scripts.Interfaces.Systems
 {
+    using Players;
+
     public interface ICombatSystem
     {
-        void ResolveCombat(Card playerCard, Card botCard);
+        void ResolveCombat();
+        void AddCardToCombat(ICardPlayer cardPlayer, Card card);
     }
 }

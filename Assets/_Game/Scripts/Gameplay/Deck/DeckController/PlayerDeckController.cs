@@ -5,6 +5,7 @@ using _Game.Scripts.Gameplay.CardPlayers.Data;
 using _Game.Scripts.Gameplay.Cards;
 using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.Players;
+using _Game.Scripts.Interfaces.Systems;
 using Cysharp.Threading.Tasks;
 using GenericEventBus;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
     public sealed class PlayerDeckController : BaseDeckController, IPlayerDeck
     {
         [Inject] private GenericEventBus<IEvent> _eventBus;
+        [Inject] private ICombatRegister _combatRegister;
         public PlayerTurnData PlayerTurnData => _playerTurnData;
         public CardPlayerHealthData CardPlayerHealthData => _cardPlayerHealthData;
         public bool IsDeckSelected => _cardList.Count == _cardPlayerData.TotalCardCount;
@@ -27,6 +29,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         protected override void Initialize()
         {
             base.Initialize();
+            _combatRegister.RegisterPlayer(this);
         }
 
         public void AddCard(Cards.Card card)

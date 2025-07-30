@@ -38,12 +38,12 @@ namespace _Game.Scripts.Systems
         
         public void Tick()
         {
-            if (_isDragging && _draggingCard != null)
-            {
-                Vector2 screenPos = _gameInput.Card.PointerPosition.ReadValue<Vector2>();
-                Vector3 worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -_mainCamera.transform.position.z));
-                _draggingCard.transform.position = new Vector2(worldPos.x, worldPos.y);
-            }
+            if (!_isDragging || _draggingCard == null) 
+                return;
+            
+            Vector2 screenPos = _gameInput.Card.PointerPosition.ReadValue<Vector2>();
+            Vector3 worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -_mainCamera.transform.position.z));
+            _draggingCard.transform.position = new Vector2(worldPos.x, worldPos.y);
         }
 
         public void Dispose()

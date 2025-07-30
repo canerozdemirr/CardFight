@@ -39,7 +39,16 @@ namespace _Game.Scripts.UI
             {
                 if (canvas == null)
                     continue;
+                
+                IEnumerable<MonoBehaviour> uiComponents = canvas.GetComponents<MonoBehaviour>()
+                    .Where(component => component is IUIElement);
 
+                foreach (MonoBehaviour component in uiComponents)
+                {
+                    Type componentType = component.GetType();
+                    _canvasByType.TryAdd(componentType, canvas);
+                }
+                
                 Type canvasType = canvas.GetType();
                 _canvasByType.TryAdd(canvasType, canvas);
             }

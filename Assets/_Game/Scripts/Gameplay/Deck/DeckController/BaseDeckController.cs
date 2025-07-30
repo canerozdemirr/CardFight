@@ -4,10 +4,16 @@ using _Game.Scripts.Gameplay.CardPlayers.Data;
 using NaughtyAttributes;
 using UnityEngine;
 using Zenject;
+using System;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckController
 {
-    public abstract class BaseDeckController : MonoBehaviour
+    using Cards;
+    using Health;
+    using Interfaces.Health;
+    using Interfaces.Players;
+
+    public abstract class BaseDeckController : MonoBehaviour, ICardPlayer
     {
         [BoxGroup("Deck Settings")]
         [SerializeField] 
@@ -17,7 +23,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         [SerializeField] 
         protected Transform[] _deckPoints;
         
-        protected List<Cards.Card> _cardList;
+        protected List<Card> _cardList;
 
         [Inject] 
         protected CardPlayerListConfig _cardPlayerListConfig;
@@ -25,6 +31,11 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         protected CardPlayerData _cardPlayerData;
         protected CardPlayerHealthData _cardPlayerHealthData;
         protected PlayerTurnData _playerTurnData;
+        
+        public IHealthComponent Health { get; private set; }
+        
+        public event Action<ICardPlayer> OnPlayerDeath;
+        public event Action<Card> OnCardPlayed;
 
         protected virtual void Initialize()
         {
@@ -37,7 +48,19 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
                 _cardPlayerHealthData = cardPlayerConfig.CardPlayerHealthData;
                 _playerTurnData = cardPlayerConfig.PlayerTurnData;
             }
-            _cardList = new List<Cards.Card>(_cardPlayerData.TotalCardCount);
+            _cardList = new List<Card>(_cardPlayerData.TotalCardCount);
+            Health = new HealthComponent(_cardPlayerHealthData.PlayerHealth);
+        }
+        
+        public void TakeDamage(int damage)
+        {
+            
+        }
+
+        public void PlayCard(Card card)
+        {
+            
         }
     }
 }
+

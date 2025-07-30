@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using _Game.Scripts.Configs.CardConfigs;
 using _Game.Scripts.Events.Card;
 using _Game.Scripts.Gameplay.Cards;
+using _Game.Scripts.Gameplay.Deck.DeckSpots;
 using _Game.Scripts.Interfaces.Deck;
 using _Game.Scripts.Interfaces.GameObjects;
 using _Game.Scripts.Interfaces.Players;
@@ -13,10 +15,10 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
     public sealed class PlayerDeckBuilder : BaseDeckBuilder, IPlayerDeckBuilder
     {
         [SerializeField]
-        private List<Transform> _cardSpawnPoints;
+        private List<DeckSpot> _cardSpawnPoints;
         
         [SerializeField]
-        private List<Transform> _playerDeckPoints;
+        private List<DeckSpot> _playerDeckPoints;
 
         [Inject] 
         private IPlayerDeck _playerDeck;
@@ -36,7 +38,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
             {
                 cardConfig = _cardListConfig.CardConfigList[i];
                 Cards.Card spawnedCard = _cardFactory.Create(cardConfig.CardData);
-                spawnedCard.transform.position =  _cardSpawnPoints[i].position;
+                spawnedCard.transform.position =  _cardSpawnPoints[i].transform.position;
                 _cardList.Add(spawnedCard);
             }
         }
@@ -63,6 +65,8 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
                     _playerDeck.RemoveCard(eventData.PickedCard);
                     _cardList.Add(eventData.PickedCard);
                     break;
+                case CardDeckState.InPlayerDeck:
+                    break;
             }
         }
         
@@ -74,6 +78,19 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
                 unusedCard.ReturnToPool();
             }
             _cardList.Clear();
+        }
+
+        public void CloseDeckSlots()
+        {
+            foreach (DeckSpot deckSpot in _cardSpawnPoints)
+            {
+                deckSpot.DisableSpot();
+            }
+
+            foreach (DeckSpot deckSpot in _playerDeckPoints)
+            {
+                deckSpot.DisableSpot();
+            }
         }
     }
 }

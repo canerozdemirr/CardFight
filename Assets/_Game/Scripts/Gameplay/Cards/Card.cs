@@ -1,6 +1,8 @@
 using System;
 using _Game.Scripts.Gameplay.Card;
 using _Game.Scripts.Gameplay.Card.Data;
+using _Game.Scripts.Gameplay.Cards.Health;
+using _Game.Scripts.Interfaces.Health;
 using UnityEngine;
 using Zenject;
 
@@ -11,44 +13,32 @@ namespace _Game.Scripts.Gameplay.Cards
         [SerializeField] private CardVisualHandler _cardVisualHandler;
         [SerializeField] private CardDeckCollisionHandler _cardDeckCollisionHandler;
 
-        private CardData _cardData;
         private IMemoryPool _memoryPool;
-        private int _currentHealth;
+        private CardHealthComponent _healthComponent;
         
         public CardDeckCollisionHandler CardDeckCollisionHandler => _cardDeckCollisionHandler;
-        public CardData CardData => _cardData;
-        public int CurrentHealth => _currentHealth;
-        public int AttackPoint => _cardData?.CardAttackData.AttackPoint ?? 0;
-        public int DefensePoint => _cardData?.CardAttackData.DefensePoint ?? 0;
-        public bool IsDestroyed => _currentHealth <= 0;
-
-        public void TakeDamage(int damage)
-        {
-            if (damage <= 0) return;
-            
-            _currentHealth = Mathf.Max(0, _currentHealth - damage);
-            
-            if (_currentHealth <= 0)
-            {
-                Debug.Log($"Card {_cardData?.CardName} was destroyed!");
-            }
-        }
+        public CardData CardData { get; private set; }
+        public IHealthComponent Health => _healthComponent;
+        public int AttackPoint => CardData?.CardAttackData.AttackPoint ?? 0;
 
         public void Dispose()
         {
-            _cardData = null;
+            CardData = null;
+            _healthComponent = null;
         }
 
         public void OnDespawned()
         {
-            _cardData = null;
+            CardData = null;
+            _healthComponent = null;
             gameObject.SetActive(false);
         }
 
         public void OnSpawned(CardData cardData, IMemoryPool memoryPool)
         {
-            _cardData = cardData;
+            CardData = cardData;
             _memoryPool = memoryPool;
+            _healthComponent = new CardHealthComponent(CardData.CardAttackData);
             gameObject.SetActive(true);
             InitializeCard();
         }
@@ -58,13 +48,17 @@ namespace _Game.Scripts.Gameplay.Cards
             _memoryPool?.Despawn(this);
         }
 
+        public int CalculateOverflowDamage(int incomingDamage)
+        {
+            return _healthComponent?.CalculateOverflowDamage(incomingDamage) ?? 0;
+        }
+
         private void InitializeCard()
         {
-            if (_cardData == null)
+            if (CardData == null)
                 return;
-
-            _currentHealth = _cardData.CardAttackData.DefensePoint;
-            _cardVisualHandler.InitializeVisuals(_cardData);
+            
+            _cardVisualHandler.InitializeVisuals(CardData);
         }
 
         public void DropToDeckSlot()

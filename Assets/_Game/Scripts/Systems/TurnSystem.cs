@@ -4,15 +4,12 @@ using _Game.Scripts.Commands.InputCommands;
 using _Game.Scripts.Commands.TimeCommands;
 using _Game.Scripts.Commands.TurnCommands;
 using _Game.Scripts.Commands.UICommands;
-using _Game.Scripts.Events.Deck;
-using _Game.Scripts.Gameplay.CardPlayers.Data;
 using _Game.Scripts.Interfaces.Commands;
 using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.Players;
 using _Game.Scripts.Interfaces.Systems;
 using _Game.Scripts.Utilities.SubSystems;
 using GenericEventBus;
-using UnityEngine.UIElements;
 using Zenject;
 
 namespace _Game.Scripts.Systems

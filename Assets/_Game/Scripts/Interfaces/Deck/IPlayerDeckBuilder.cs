@@ -4,5 +4,6 @@ namespace _Game.Scripts.Interfaces.Deck
     {
         void PreparePlayerDeck();
         void ClearUnusedCards();
+        void CloseDeckSlots();
     }
 }

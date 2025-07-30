@@ -3,8 +3,10 @@ using _Game.Scripts.Gameplay.Cards;
 using _Game.Scripts.Gameplay.Deck.DeckSpots;
 using _Game.Scripts.Interfaces.Players;
 using _Game.Scripts.Interfaces.Strategies;
+using _Game.Scripts.Interfaces.Systems;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckController
 {
@@ -17,11 +19,19 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         private DeckSpot _playingDeckSpot;
         public PlayerTurnData PlayerTurnData => _playerTurnData;
         public CardPlayerHealthData CardPlayerHealthData => _cardPlayerHealthData;
+
+        [Inject] private ICombatRegister _combatRegister;
         
         public bool IsDeckSelected => _cardList.Count >= _cardPlayerData.TotalCardCount;
         public void PrepareDeck()
         {
             Initialize();
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _combatRegister.RegisterPlayer(this);
         }
 
         public void AddCardToDeck(Cards.Card card)
@@ -33,18 +43,6 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
             else
             {
                 Debug.LogWarning($"Card {card.name} is already in the deck.");
-            }
-        }
-
-        public void RemoveCardFromDeck(Cards.Card card)
-        {
-            if (_cardList.Contains(card))
-            {
-                _cardList.Remove(card);
-            }
-            else
-            {
-                Debug.LogWarning($"Card {card.name} not found in the deck.");
             }
         }
 
@@ -72,6 +70,11 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
             {
                 Debug.LogWarning("No card available to play.");
             }
+        }
+
+        public void PlayCard(Cards.Card card)
+        {
+            _cardList.Remove(card);
         }
     }
 }
