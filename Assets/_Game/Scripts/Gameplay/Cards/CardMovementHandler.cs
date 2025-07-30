@@ -23,10 +23,13 @@ namespace _Game.Scripts.Gameplay.Cards
 
         public void MoveCardToDeck(Vector3 targetPosition, bool isRelative = false)
         {
-            _didMoveToDeck = true;
+            // reset flag before starting the movement so callers can await completion
+            _didMoveToDeck = false;
             transform.DOMove(targetPosition, _deckMovementDuration)
-                .SetEase(_deckMovementEaseType).OnComplete(() => _didMoveToDeck = true)
-                .SetRelative(isRelative).SetLink(gameObject, LinkBehaviour.KillOnDestroy);
+                .SetEase(_deckMovementEaseType)
+                .SetRelative(isRelative)
+                .OnComplete(() => _didMoveToDeck = true)
+                .SetLink(gameObject, LinkBehaviour.KillOnDestroy);
         }
 
         public void MoveCardToPlayingDeck(Vector3 targetPosition, bool isRelative = false)
