@@ -73,6 +73,7 @@ namespace _Game.Scripts.Systems
                 return;
             
             _eventBus.Raise(new OnCardDropped(_draggingCard));
+            
             _isDragging = false;
             _draggingCard = null;
         }

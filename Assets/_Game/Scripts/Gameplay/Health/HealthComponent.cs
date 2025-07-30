@@ -25,7 +25,8 @@ namespace _Game.Scripts.Gameplay.Health
 
         public void TakeDamage(int damage)
         {
-            if (damage <= 0 || !IsAlive) return;
+            if (!IsAlive) 
+                return;
 
             _currentHealth = Mathf.Max(0, _currentHealth - damage);
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
@@ -38,8 +39,6 @@ namespace _Game.Scripts.Gameplay.Health
 
         public void Heal(int amount)
         {
-            if (amount <= 0 || !IsAlive) return;
-
             _currentHealth = Mathf.Min(_maxHealth, _currentHealth + amount);
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
         }

@@ -63,10 +63,5 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
                 }
             }
         }
-
-        public void PlayCard(Cards.Card card)
-        {
-            _cardList.Remove(card);
-        }
     }
 }

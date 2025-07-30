@@ -13,7 +13,7 @@ namespace _Game.Scripts.Commands.CardCommands
         private readonly IAIDeck _aiDeck;
         public UniTask Execute()
         {
-            _aiDeck.PlayCard();
+            //_aiDeck.PlayCard();
             return UniTask.CompletedTask;
         }
     }

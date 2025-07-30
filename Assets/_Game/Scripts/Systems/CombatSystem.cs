@@ -33,8 +33,8 @@ namespace _Game.Scripts.Systems
             int attackDamage = attackingCard.AttackPoint;
 
             defendingCard.Health.TakeDamage(attackDamage);
-            
-            int overflowDamage = defendingCard.CalculateOverflowDamage(attackDamage);
+
+            int overflowDamage = attackingCard.AttackPoint - defendingCard.DefensePoint;
             if (overflowDamage > 0)
             {
                 defendingPlayer.TakeDamage(overflowDamage);
@@ -76,7 +76,7 @@ namespace _Game.Scripts.Systems
 
         public Card GetCardInCombat(ICardPlayer cardPlayer)
         {
-            return _cardsInCombat.TryGetValue(cardPlayer, out Card card) ? card : null;
+            return _cardsInCombat.GetValueOrDefault(cardPlayer);
         }
 
         public int GetCombatantCount()
@@ -101,20 +101,20 @@ namespace _Game.Scripts.Systems
         
         public void RegisterPlayer(ICardPlayer player)
         {
-            if (player != null && !_registeredPlayers.Contains(player))
-            {
-                _registeredPlayers.Add(player);
-                Debug.Log($"Player registered to combat system. Total players: {_registeredPlayers.Count}");
-            }
+            if (player == null || _registeredPlayers.Contains(player)) 
+                return;
+            
+            _registeredPlayers.Add(player);
+            Debug.Log($"Player registered to combat system. Total players: {_registeredPlayers.Count}");
         }
 
         public void UnregisterPlayer(ICardPlayer player)
         {
-            if (player != null && _registeredPlayers.Contains(player))
-            {
-                _registeredPlayers.Remove(player);
-                Debug.Log($"Player unregistered from combat system. Total players: {_registeredPlayers.Count}");
-            }
+            if (player == null || !_registeredPlayers.Contains(player)) 
+                return;
+            
+            _registeredPlayers.Remove(player);
+            Debug.Log($"Player unregistered from combat system. Total players: {_registeredPlayers.Count}");
         }
 
         public IReadOnlyList<ICardPlayer> RegisteredPlayers => _registeredPlayers;

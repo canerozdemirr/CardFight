@@ -2,9 +2,13 @@ using _Game.Scripts.Gameplay.CardPlayers.Data;
 
 namespace _Game.Scripts.Interfaces.Systems
 {
+    using Cysharp.Threading.Tasks;
+    using Players;
+
     public interface ITurnSystem
     {
-        void StartTurn();
+        UniTask StartTurn();
         void EndTurn();
+        ICardPlayer CurrentCardPlayer { get; }
     }
 }

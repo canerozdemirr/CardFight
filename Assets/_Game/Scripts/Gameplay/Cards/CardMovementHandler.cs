@@ -20,6 +20,9 @@ namespace _Game.Scripts.Gameplay.Cards
 
         private bool _didMoveToDeck;
         public bool DidMoveToDeck => _didMoveToDeck;
+        
+        private bool _isCardBeingDragged;
+        public bool IsCardBeingDragged => _isCardBeingDragged;
 
         public void MoveCardToDeck(Vector3 targetPosition, bool isRelative = false)
         {
@@ -37,6 +40,11 @@ namespace _Game.Scripts.Gameplay.Cards
             transform.DOMove(targetPosition, _cardPlayMovementDuration)
                 .SetEase(_playingMovementEaseType)
                 .SetRelative(isRelative).SetLink(gameObject, LinkBehaviour.KillOnDestroy);
+        }
+        
+        public void SetCardBeingDragged(bool isBeingDragged)
+        {
+            _isCardBeingDragged = isBeingDragged;
         }
     }
 }

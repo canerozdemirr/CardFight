@@ -18,9 +18,10 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         [SerializeField] 
         private DeckSpot _playingDeckSpot;
         public PlayerTurnData PlayerTurnData => _playerTurnData;
-        public CardPlayerHealthData CardPlayerHealthData => _cardPlayerHealthData;
 
         [Inject] private ICombatRegister _combatRegister;
+
+        [Inject] private ICombatSystem _combatSystem;
         
         public bool IsDeckSelected => _cardList.Count >= _cardPlayerData.TotalCardCount;
         public void PrepareDeck()
@@ -63,18 +64,14 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
                 {
                     pickedCard.transform.position = _playingDeckSpot.transform.position;
                 }
-                
+
+                _combatSystem.AddCardToCombat(this, pickedCard);
                 _cardList.Remove(pickedCard);
             }
             else
             {
                 Debug.LogWarning("No card available to play.");
             }
-        }
-
-        public void PlayCard(Cards.Card card)
-        {
-            _cardList.Remove(card);
         }
     }
 }

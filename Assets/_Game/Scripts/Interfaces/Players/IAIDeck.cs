@@ -11,9 +11,6 @@ namespace _Game.Scripts.Interfaces.Players
 
         void PrepareDeck();
         void AddCardToDeck(Card card);
-        UniTask PlayCard();
-   
         PlayerTurnData PlayerTurnData { get; }
-        CardPlayerHealthData CardPlayerHealthData { get; }
     }
 }

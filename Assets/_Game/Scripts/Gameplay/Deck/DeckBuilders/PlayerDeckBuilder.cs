@@ -55,7 +55,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 
             eventData.PickedCard.DropToDeckSlot();
 
-            switch (eventData.PickedCard.CardDeckCollisionHandler.CardDeckState)
+            /*switch (eventData.PickedCard.CardDeckCollisionHandler.CardDeckState)
             {
                 case CardDeckState.InSelectingDeck:
                     _playerDeck.AddCard(eventData.PickedCard);
@@ -67,7 +67,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
                     break;
                 case CardDeckState.InPlayerDeck:
                     break;
-            }
+            }*/
         }
         
         public void ClearUnusedCards()

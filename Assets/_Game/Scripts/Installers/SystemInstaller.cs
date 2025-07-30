@@ -24,8 +24,8 @@ namespace _Game.Scripts.Installers
             Container.BindExecutionOrder<GenericEventBus<IEvent>>(0);
             Container.BindExecutionOrder<GameInputSystem>(1);
             Container.BindExecutionOrder<DeckBuildingSystem>(2);
-            Container.BindExecutionOrder<TurnSystem>(3);
-            Container.BindExecutionOrder<CombatSystem>(4);
+            Container.BindExecutionOrder<CombatSystem>(3);
+            Container.BindExecutionOrder<TurnSystem>(4);
             Container.BindExecutionOrder<TimeSystem>(5);
             Container.BindExecutionOrder<UIManagementSystem>(6);
         }

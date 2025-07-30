@@ -54,12 +54,12 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         
         public void TakeDamage(int damage)
         {
-            
+            Health.TakeDamage(damage);
         }
 
-        public void PlayCard(Card card)
+        public virtual void PlayCard(Card card)
         {
-            
+            _cardList.Remove(card);
         }
     }
 }

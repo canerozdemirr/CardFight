@@ -43,7 +43,7 @@ namespace _Game.Scripts.UI
         public bool IsVisible => gameObject.activeSelf;
         public void Initialize()
         {
-            _eventBus.SubscribeTo<OnPlayerCardPlayed>(OnPlayerCardPlayed);
+            _eventBus.SubscribeTo<OnPlayerCardPicked>(OnPlayerCardPlayed);
             _eventBus.SubscribeTo<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
             
             _timeSystem.OnSecondElapsed += OnSecondElapsed;
@@ -52,7 +52,7 @@ namespace _Game.Scripts.UI
 
         public void Cleanup()
         {
-            _eventBus.UnsubscribeFrom<OnPlayerCardPlayed>(OnPlayerCardPlayed);
+            _eventBus.UnsubscribeFrom<OnPlayerCardPicked>(OnPlayerCardPlayed);
             _eventBus.UnsubscribeFrom<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
             
             _timeSystem.OnSecondElapsed -= OnSecondElapsed;
@@ -70,7 +70,7 @@ namespace _Game.Scripts.UI
             gameObject.SetActive(false);
         }
         
-        private void OnPlayerCardPlayed(ref OnPlayerCardPlayed eventData)
+        private void OnPlayerCardPlayed(ref OnPlayerCardPicked eventData)
         {
             _endTurnButton.gameObject.SetActive(true);
         }

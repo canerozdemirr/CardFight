@@ -5,8 +5,6 @@ namespace _Game.Scripts.Interfaces.Players
 {
     public interface ICardPlayer
     {
-        IHealthComponent Health { get; }
-        
         void TakeDamage(int damage);
         void PlayCard(Card card);
         
