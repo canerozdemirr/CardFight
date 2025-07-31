@@ -5,6 +5,9 @@ using _Game.Scripts.Interfaces.Skills;
 using _Game.Scripts.Interfaces.Systems;
 using _Game.Scripts.Interfaces.Players;
 using _Game.Scripts.Configs.Skills;
+using _Game.Scripts.Events.Skill;
+using _Game.Scripts.Interfaces.Events;
+using GenericEventBus;
 using UnityEngine;
 using Zenject;
 
@@ -21,6 +24,9 @@ namespace _Game.Scripts.Systems
         
         [Inject(Optional = true)]
         private SkillsConfig _skillsConfig;
+        
+        [Inject]
+        private GenericEventBus<IEvent> _eventBus;
 
         public IReadOnlyList<ISkill> ActiveSkills => _activeSkills;
 
@@ -50,6 +56,10 @@ namespace _Game.Scripts.Systems
                 
             _activeSkills.Add(skill);
             skill.Apply();
+            
+            // Fire event that skill was applied
+            _eventBus?.Raise(new OnSkillApplied(skill));
+            
             Debug.Log($"Added skill: {skill.SkillName} (Total active: {_activeSkills.Count})");
         }
 
