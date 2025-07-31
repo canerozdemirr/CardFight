@@ -32,6 +32,9 @@ namespace _Game.Scripts.Systems
                 (ICardPlayer defendingPlayer, Card defendingCard) = _cardsInCombat.ElementAt(randomIndex);
                 ExecuteAttack(attackingCard, defendingPlayer, defendingCard);
             }
+            
+            // Clear cards from combat after resolution
+            _cardsInCombat.Clear();
         }
 
         private void ExecuteAttack(Card attackingCard, ICardPlayer defendingPlayer, Card defendingCard)
@@ -65,6 +68,11 @@ namespace _Game.Scripts.Systems
         public void RemoveCardFromCombat(ICardPlayer cardPlayer)
         {
             _cardsInCombat.Remove(cardPlayer);
+        }
+
+        public bool AllPlayersHavePlayedCards()
+        {
+            return _cardsInCombat.Count == _registeredPlayers.Count;
         }
 
         public void Initialize()
