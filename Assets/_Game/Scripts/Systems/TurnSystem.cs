@@ -33,8 +33,11 @@ namespace _Game.Scripts.Systems
         [Inject] 
         private ICombatSystem _combatSystem;
         
-        [Inject]
+        [Inject] 
         private TurnConfig _turnConfig;
+        
+        [Inject]
+        private ISkillSystem _skillSystem;
 
         private int _currentTurnCount;
         private int _currentPlayerIndex;
@@ -60,6 +63,12 @@ namespace _Game.Scripts.Systems
         {
             ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
             _currentTurnCount++;
+            
+            // Randomly apply skills at the start of each turn (demonstration)
+            if (UnityEngine.Random.Range(0f, 1f) < 0.3f) // 30% chance
+            {
+                _skillSystem?.ApplyRandomSkill();
+            }
             
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Bot)
             {
