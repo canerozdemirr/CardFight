@@ -8,6 +8,7 @@ using _Game.Scripts.Interfaces.Commands;
 using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.Players;
 using _Game.Scripts.Interfaces.Systems;
+using _Game.Scripts.UI;
 using _Game.Scripts.Utilities.SubSystems;
 using GenericEventBus;
 using Zenject;
@@ -78,7 +79,7 @@ namespace _Game.Scripts.Systems
                 await _playerTurnCommandExecutor.ExecuteCommands();
             }
             
-            if (_currentPlayerIndex >= _allPlayersCount)
+            if (_currentPlayerIndex >= _allPlayersCount - 1)
             {
                 if (_currentTurnCount >= _turnConfig.MaxTurnsBeforeGameEnd)
                 {
@@ -106,9 +107,10 @@ namespace _Game.Scripts.Systems
         {
             _aiTurnCommandExecutor.Enqueue(new StartTurnTimerCommand(_turnConfig.TurnDurationInSeconds));
             _playerTurnCommandExecutor.Enqueue(new EnableInputCommand());
-            _playerTurnCommandExecutor.Enqueue(new OpenTurnUICommand());
-            _playerTurnCommandExecutor.Enqueue(new OpenCombatUICommand());
-            _playerTurnCommandExecutor.Enqueue(new AwaitPlayerPlayCardCommand());
+            _playerTurnCommandExecutor.Enqueue(new OpenUICommand<TurnCanvas>());
+            _playerTurnCommandExecutor.Enqueue(new OpenUICommand<CombatCanvas>());
+            _playerTurnCommandExecutor.Enqueue(new OpenUICommand<SkillCanvas>());
+            _playerTurnCommandExecutor.Enqueue(new AwaitPlayerEndTurnCommand());
             _playerTurnCommandExecutor.Enqueue(new DisableInputCommand());
         }
         

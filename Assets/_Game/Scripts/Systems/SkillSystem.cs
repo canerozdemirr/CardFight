@@ -22,7 +22,7 @@ namespace _Game.Scripts.Systems
         [Inject]
         private ICombatRegister _combatRegister;
         
-        [Inject(Optional = true)]
+        [Inject]
         private SkillListConfig _skillListConfig;
         
         [Inject]
@@ -30,9 +30,12 @@ namespace _Game.Scripts.Systems
 
         public IReadOnlyList<ISkill> ActiveSkills => _activeSkills;
 
+        private ISkill _pickedSkill;
+
         public void Initialize()
         {
             PopulateAvailableSkillConfigs();
+            _eventBus.SubscribeTo<OnSkillUsed>(OnSkillUsed);
             Debug.Log($"Skill System initialized with {_availableSkillConfigs.Count} available skill configurations");
         }
 
@@ -46,6 +49,7 @@ namespace _Game.Scripts.Systems
             
             _activeSkills.Clear();
             _availableSkillConfigs.Clear();
+            _eventBus.UnsubscribeFrom<OnSkillUsed>(OnSkillUsed);
         }
 
         public void AddSkill(ISkill skill)
@@ -54,9 +58,6 @@ namespace _Game.Scripts.Systems
                 return;
                 
             _activeSkills.Add(skill);
-            skill.Apply();
-            
-            _eventBus.Raise(new OnSkillApplied(skill));
             
             Debug.Log($"Added skill: {skill.SkillName} (Total active: {_activeSkills.Count})");
         }
@@ -119,6 +120,7 @@ namespace _Game.Scripts.Systems
         public void ApplyRandomSkill(ICardPlayer skillOwner)
         {
             ISkill randomSkill = PickRandomSkill(skillOwner);
+            _pickedSkill = randomSkill;
             if (randomSkill != null)
             {
                 AddSkill(randomSkill);
@@ -163,6 +165,11 @@ namespace _Game.Scripts.Systems
             {
                 Debug.LogWarning("No SkillsConfig injected - skill system will have no available skills");
             }
+        }
+        
+        private void OnSkillUsed(ref OnSkillUsed eventData)
+        {
+            _pickedSkill?.Apply();
         }
     }
 }

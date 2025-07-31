@@ -24,8 +24,10 @@ namespace _Game.Scripts.Skills
             if (isApplied || targetPlayer == null) 
                 return;
                 
-            // Subscribe to card played event to apply boost
-            targetPlayer.OnCardPlayed += ApplyDefenseBoost;
+            foreach (Card card in targetPlayer.AllCardsInHand)
+            {
+                card.AddDefensePoint(defenseBoost);
+            }
             isApplied = true;
             Debug.Log($"Applied {SkillName} to player: next card gets +{defenseBoost} defense");
         }
@@ -35,7 +37,10 @@ namespace _Game.Scripts.Skills
             if (!isApplied || targetPlayer == null) 
                 return;
                 
-            targetPlayer.OnCardPlayed -= ApplyDefenseBoost;
+            foreach (Card card in targetPlayer.AllCardsInHand)
+            {
+                card.AddDefensePoint(-defenseBoost);
+            }
             isApplied = false;
             Debug.Log($"Removed {SkillName} from player");
         }

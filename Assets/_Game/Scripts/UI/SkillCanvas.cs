@@ -10,11 +10,9 @@ namespace _Game.Scripts.UI
 {
     public class SkillCanvas : MonoBehaviour, IUIElement
     {
-        [SerializeField] 
-        private TextMeshProUGUI _skillDescriptionText;
-        
-        [Inject] 
-        private GenericEventBus<IEvent> _eventBus;
+        [SerializeField] private TextMeshProUGUI _skillDescriptionText;
+
+        [Inject] private GenericEventBus<IEvent> _eventBus;
 
         public void Show()
         {
@@ -41,14 +39,11 @@ namespace _Game.Scripts.UI
 
         private void OnSkillApplied(ref OnSkillApplied eventData)
         {
-            if (eventData.AppliedSkill != null)
-            {
-                _skillDescriptionText.SetText($"Skill Applied: {eventData.AppliedSkill.SkillName}\n{eventData.AppliedSkill.Description}");
-                Show();
-                
-                // Auto-hide after a few seconds
-                Invoke(nameof(Hide), 3f);
-            }
+            if (eventData.AppliedSkill == null) 
+                return;
+            
+            _skillDescriptionText.SetText(
+                $"Skill Applied: {eventData.AppliedSkill.SkillName}\n{eventData.AppliedSkill.Description}");
         }
     }
 }

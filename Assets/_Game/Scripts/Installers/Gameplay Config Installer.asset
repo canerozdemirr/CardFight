@@ -15,3 +15,4 @@ MonoBehaviour:
   _cardListConfig: {fileID: 11400000, guid: f6b118811a2fe5c4d89c2bedc734caf2, type: 2}
   _cardPlayerListConfig: {fileID: 11400000, guid: ebb522496be73ed408f776b9abcfee62, type: 2}
   _turnConfig: {fileID: 11400000, guid: 388731e626cadc346b7e6d195b4c53d8, type: 2}
+  _skillListConfig: {fileID: 11400000, guid: dc895de18af20c241b0415ba48400aaf, type: 2}

@@ -34,26 +34,14 @@ namespace _Game.Scripts.Systems
             }
 
             CleanupCards();
-            _ = _turnSystem.StartTurn();
         }
 
         private void ExecuteAttack(Card attackingCard, ICardPlayer defendingPlayer, Card defendingCard)
         { 
-            int attackDamage = attackingCard.AttackPoint;
-
-            defendingCard.Health.TakeDamage(attackDamage);
-
             int overflowDamage = attackingCard.AttackPoint - defendingCard.DefensePoint;
             if (overflowDamage > 0)
             {
                 defendingPlayer.TakeDamage(overflowDamage);
-            }
-
-            Debug.Log($"Combat Result: {defendingCard.CardData.CardName} health: {defendingCard.Health.CurrentHealth}/{defendingCard.Health.MaxHealth}");
-            
-            if (!defendingCard.Health.IsAlive)
-            {
-                Debug.Log($"{defendingCard.CardData.CardName} was defeated!");
             }
         }
 
@@ -61,6 +49,7 @@ namespace _Game.Scripts.Systems
         {
             foreach (ICardPlayer player in _registeredPlayers)
             {
+                _cardsInCombat[player].OnDespawned();
                 _cardsInCombat.Remove(player);
             }
         }
@@ -71,31 +60,6 @@ namespace _Game.Scripts.Systems
             {
                 _cardsInCombat[cardPlayer] = card;
             }
-        }
-
-        public void RemoveCardFromCombat(ICardPlayer cardPlayer)
-        {
-            _cardsInCombat.Remove(cardPlayer);
-        }
-
-        public bool IsInCombat(ICardPlayer cardPlayer)
-        {
-            return _cardsInCombat.ContainsKey(cardPlayer);
-        }
-
-        public Card GetCardInCombat(ICardPlayer cardPlayer)
-        {
-            return _cardsInCombat.GetValueOrDefault(cardPlayer);
-        }
-
-        public int GetCombatantCount()
-        {
-            return _cardsInCombat.Count;
-        }
-
-        private ICardPlayer GetCardOwner(Card card)
-        {
-            return _cardsInCombat.FirstOrDefault(kvp => kvp.Value == card).Key;
         }
 
         public void Initialize()
