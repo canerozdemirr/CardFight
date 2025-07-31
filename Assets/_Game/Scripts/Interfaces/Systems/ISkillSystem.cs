@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Game.Scripts.Interfaces.Skills;
+using _Game.Scripts.Interfaces.Players;
 
 namespace _Game.Scripts.Interfaces.Systems
 {
@@ -8,7 +9,7 @@ namespace _Game.Scripts.Interfaces.Systems
         IReadOnlyList<ISkill> ActiveSkills { get; }
         void AddSkill(ISkill skill);
         void RemoveSkill(ISkill skill);
-        ISkill PickRandomSkill();
-        void ApplyRandomSkill();
+        ISkill PickRandomSkill(ICardPlayer skillOwner);
+        void ApplyRandomSkill(ICardPlayer skillOwner);
     }
 }

@@ -13,6 +13,7 @@ namespace _Game.Scripts.Skills
         
         public override string SkillName => "Attack Boost";
         public override string Description => $"Increases next played card attack by {attackBoost} points";
+        public override SkillTargetType TargetType => SkillTargetType.Owner;
 
         public AttackBoostSkill()
         {

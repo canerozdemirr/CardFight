@@ -1,5 +1,6 @@
 using System.Text;
 using _Game.Scripts.Interfaces.Systems;
+using _Game.Scripts.Interfaces.Players;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -23,6 +24,9 @@ namespace _Game.Scripts.UI.Debug
         [Inject]
         private ISkillSystem _skillSystem;
         
+        [Inject]
+        private ICombatRegister _combatRegister;
+        
         private float _lastUpdateTime;
 
         private void Start()
@@ -44,10 +48,20 @@ namespace _Game.Scripts.UI.Debug
             if (applyRandomSkillButton != null)
             {
                 applyRandomSkillButton.onClick.AddListener(() => {
-                    if (_skillSystem != null)
+                    if (_skillSystem != null && _combatRegister != null)
                     {
-                        _skillSystem.ApplyRandomSkill();
-                        Debug.Log("Applied random skill via debug UI");
+                        var players = _combatRegister.RegisteredPlayers;
+                        if (players.Count > 0)
+                        {
+                            // Use the first player as the skill owner for debug purposes
+                            var skillOwner = players[0];
+                            _skillSystem.ApplyRandomSkill(skillOwner);
+                            Debug.Log($"Applied random skill via debug UI for player: {skillOwner.name}");
+                        }
+                        else
+                        {
+                            Debug.LogWarning("No registered players available for skill application");
+                        }
                     }
                 });
             }
@@ -96,9 +110,15 @@ namespace _Game.Scripts.UI.Debug
         [ContextMenu("Apply Random Skill")]
         public void ApplyRandomSkillManual()
         {
-            if (_skillSystem != null)
+            if (_skillSystem != null && _combatRegister != null)
             {
-                _skillSystem.ApplyRandomSkill();
+                var players = _combatRegister.RegisteredPlayers;
+                if (players.Count > 0)
+                {
+                    // Use the first player as the skill owner for debug purposes
+                    var skillOwner = players[0];
+                    _skillSystem.ApplyRandomSkill(skillOwner);
+                }
             }
         }
 

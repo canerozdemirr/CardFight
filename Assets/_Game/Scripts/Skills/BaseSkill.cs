@@ -10,6 +10,7 @@ namespace _Game.Scripts.Skills
     {
         public abstract string SkillName { get; }
         public abstract string Description { get; }
+        public abstract SkillTargetType TargetType { get; }
         
         [NonSerialized]
         protected ICardPlayer targetPlayer;

@@ -13,6 +13,7 @@ namespace _Game.Scripts.Skills
         
         public override string SkillName => "Defense Boost";
         public override string Description => $"Increases next played card defense by {defenseBoost} points";
+        public override SkillTargetType TargetType => SkillTargetType.Owner;
 
         public DefenseBoostSkill()
         {

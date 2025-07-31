@@ -154,7 +154,7 @@ namespace _Game.Scripts.Gameplay
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    var randomSkill = _skillSystem.PickRandomSkill();
+                    var randomSkill = _skillSystem.PickRandomSkill(_demoPlayer);
                     if (randomSkill != null)
                     {
                         Debug.Log($"Picked random skill: {randomSkill.SkillName} - {randomSkill.Description}");

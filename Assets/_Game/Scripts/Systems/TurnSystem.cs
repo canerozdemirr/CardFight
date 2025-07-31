@@ -67,7 +67,7 @@ namespace _Game.Scripts.Systems
             // Apply random skill when it's a player's turn (not AI/Bot)
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Player)
             {
-                _skillSystem?.ApplyRandomSkill();
+                _skillSystem?.ApplyRandomSkill(cardPlayer);
             }
             
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Bot)

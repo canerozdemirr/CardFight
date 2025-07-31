@@ -15,6 +15,7 @@ namespace _Game.Scripts.Skills
         
         public override string SkillName => "Shield";
         public override string Description => $"Provides {shieldAmount} shield points to the player";
+        public override SkillTargetType TargetType => SkillTargetType.Owner;
 
         public ShieldSkill()
         {

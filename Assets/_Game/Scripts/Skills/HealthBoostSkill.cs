@@ -12,6 +12,7 @@ namespace _Game.Scripts.Skills
         
         public override string SkillName => "Health Boost";
         public override string Description => $"Increases player health by {healthBoost} points";
+        public override SkillTargetType TargetType => SkillTargetType.Owner;
 
         public HealthBoostSkill()
         {

@@ -63,7 +63,7 @@ namespace _Game.Scripts.Systems
             Debug.Log($"Removed skill: {skill.SkillName} (Total active: {_activeSkills.Count})");
         }
 
-        public ISkill PickRandomSkill()
+        public ISkill PickRandomSkill(ICardPlayer skillOwner)
         {
             if (_availableSkillConfigs.Count == 0)
             {
@@ -71,7 +71,13 @@ namespace _Game.Scripts.Systems
                 return null;
             }
 
-            // Get players to apply skills to
+            if (skillOwner == null)
+            {
+                Debug.LogWarning("Skill owner is null, cannot pick random skill");
+                return null;
+            }
+
+            // Get all registered players to determine targeting
             var players = _combatRegister.RegisteredPlayers;
             if (players.Count == 0) 
             {
@@ -83,11 +89,6 @@ namespace _Game.Scripts.Systems
             int randomConfigIndex = UnityEngine.Random.Range(0, _availableSkillConfigs.Count);
             var selectedSkillConfig = _availableSkillConfigs[randomConfigIndex];
             
-            // Pick a random player
-            int randomPlayerIndex = UnityEngine.Random.Range(0, players.Count);
-            var selectedPlayer = players[randomPlayerIndex];
-
-            // Create a copy of the skill and initialize it for the selected player
             var skillImplementation = selectedSkillConfig.SkillImplementation;
             if (skillImplementation == null)
             {
@@ -95,20 +96,54 @@ namespace _Game.Scripts.Systems
                 return null;
             }
 
-            // Create a copy of the skill (since we can't modify the original ScriptableObject reference)
+            // Determine the target based on skill's target type
+            ICardPlayer targetPlayer = DetermineSkillTarget(skillImplementation.TargetType, skillOwner, players);
+            if (targetPlayer == null)
+            {
+                Debug.LogWarning($"Could not determine target for skill {skillImplementation.SkillName} with target type {skillImplementation.TargetType}");
+                return null;
+            }
+
+            // Create a copy of the skill and initialize it for the target player
             var skillCopy = (ISkill)Activator.CreateInstance(skillImplementation.GetType());
-            skillCopy.Initialize(selectedPlayer);
+            skillCopy.Initialize(targetPlayer);
             
-            Debug.Log($"Picked random skill: {skillCopy.SkillName} for player: {selectedPlayer.name}");
+            Debug.Log($"Picked random skill: {skillCopy.SkillName} for owner: {skillOwner.name}, targeting: {targetPlayer.name}");
             return skillCopy;
         }
 
-        public void ApplyRandomSkill()
+        public void ApplyRandomSkill(ICardPlayer skillOwner)
         {
-            var randomSkill = PickRandomSkill();
+            var randomSkill = PickRandomSkill(skillOwner);
             if (randomSkill != null)
             {
                 AddSkill(randomSkill);
+            }
+        }
+
+        private ICardPlayer DetermineSkillTarget(SkillTargetType targetType, ICardPlayer skillOwner, IReadOnlyList<ICardPlayer> allPlayers)
+        {
+            switch (targetType)
+            {
+                case SkillTargetType.Owner:
+                    return skillOwner;
+                
+                case SkillTargetType.Opponent:
+                    // Find opponents (players with different occupation than skill owner)
+                    var opponents = allPlayers.Where(p => p != skillOwner && p.PlayerOccupation != skillOwner.PlayerOccupation).ToList();
+                    if (opponents.Count == 0)
+                    {
+                        Debug.LogWarning("No opponents found for skill targeting");
+                        return null;
+                    }
+                    
+                    // Pick a random opponent
+                    int randomOpponentIndex = UnityEngine.Random.Range(0, opponents.Count);
+                    return opponents[randomOpponentIndex];
+                
+                default:
+                    Debug.LogWarning($"Unknown skill target type: {targetType}");
+                    return null;
             }
         }
 
