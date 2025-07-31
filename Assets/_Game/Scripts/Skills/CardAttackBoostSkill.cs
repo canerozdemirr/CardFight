@@ -7,7 +7,7 @@ using UnityEngine;
 namespace _Game.Scripts.Skills
 {
     [Serializable]
-    public class AttackBoostSkill : BaseSkill
+    public class CardAttackBoostSkill : BaseSkill
     {
         [SerializeField] private int attackBoost = 10;
         
@@ -15,7 +15,7 @@ namespace _Game.Scripts.Skills
         public override string Description => $"Increases next played card attack by {attackBoost} points";
         public override SkillTargetType TargetType => SkillTargetType.Owner;
 
-        public AttackBoostSkill()
+        public CardAttackBoostSkill()
         {
         }
 
@@ -44,11 +44,7 @@ namespace _Game.Scripts.Skills
         {
             if (card != null)
             {
-                // For now, this is a conceptual boost - in a full implementation,
-                // the Card class would need a modifier system
                 Debug.Log($"Attack boost applied to {card.CardData?.CardName}: +{attackBoost} attack");
-                
-                // Auto-remove after one use
                 Remove();
             }
         }

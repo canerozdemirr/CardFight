@@ -4,8 +4,8 @@ namespace _Game.Scripts.Interfaces.Skills
 {
     public enum SkillTargetType
     {
-        Owner,      // Targets the player who owns/triggered the skill
-        Opponent    // Targets the opponent(s) of the skill owner
+        Owner,
+        Opponent
     }
 
     public interface ISkill

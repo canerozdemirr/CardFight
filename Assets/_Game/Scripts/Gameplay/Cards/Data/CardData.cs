@@ -1,4 +1,5 @@
 using System;
+using _Game.Scripts.Gameplay.Cards.Data;
 using UnityEngine;
 
 namespace _Game.Scripts.Gameplay.Card.Data

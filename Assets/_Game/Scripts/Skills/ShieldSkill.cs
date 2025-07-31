@@ -19,6 +19,7 @@ namespace _Game.Scripts.Skills
 
         public ShieldSkill()
         {
+            
         }
 
         public override void Apply()
@@ -28,7 +29,7 @@ namespace _Game.Scripts.Skills
                 
             originalMaxHealth = targetPlayer.Health.MaxHealth;
             targetPlayer.Health.SetMaxHealth(originalMaxHealth + shieldAmount);
-            targetPlayer.Health.Heal(shieldAmount); // Restore the shield amount as health
+            targetPlayer.Health.Heal(shieldAmount);
             isApplied = true;
             Debug.Log($"Applied {SkillName} to player: +{shieldAmount} shield");
         }
@@ -37,8 +38,7 @@ namespace _Game.Scripts.Skills
         {
             if (!isApplied || targetPlayer?.Health == null) 
                 return;
-                
-            // Reduce max health back to original, ensuring current health doesn't exceed it
+
             targetPlayer.Health.SetMaxHealth(originalMaxHealth);
             isApplied = false;
             Debug.Log($"Removed {SkillName} from player: -{shieldAmount} shield");

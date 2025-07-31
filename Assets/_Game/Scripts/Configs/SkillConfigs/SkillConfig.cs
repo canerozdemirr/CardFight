@@ -1,12 +1,10 @@
-using System;
 using _Game.Scripts.Interfaces.Skills;
-using MackySoft.SerializeReferenceExtensions;
 using UnityEngine;
 
-namespace _Game.Scripts.Configs.Skills
+namespace _Game.Scripts.Configs.SkillConfigs
 {
-    [Serializable]
-    public class SkillConfig
+    [CreateAssetMenu(fileName = "SkillConfig", menuName = "Game/Configs/Skill Config")]
+    public class SkillConfig : ScriptableObject
     {
         [SerializeReference, SubclassSelector]
         [SerializeField] private ISkill skillImplementation;

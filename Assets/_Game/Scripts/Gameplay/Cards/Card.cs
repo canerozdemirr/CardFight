@@ -43,7 +43,7 @@ namespace _Game.Scripts.Gameplay.Cards
 
         public void OnSpawned(CardData cardData, IMemoryPool memoryPool)
         {
-            CardData = cardData;
+            CardData = new CardData(cardData);
             _memoryPool = memoryPool;
             _healthComponent = new HealthComponent(CardData.CardAttackData.Health);
             gameObject.SetActive(true);
@@ -66,6 +66,15 @@ namespace _Game.Scripts.Gameplay.Cards
         public void DropToDeckSlot()
         {
             _cardDeckCollisionHandler.DropCard();
+        }
+        
+        public void AddAttackPoint(int value)
+        {
+            if (CardData == null) 
+                return;
+            
+            // CardData.CardAttackData.AttackPoint += value;
+            // _cardVisualHandler.UpdateAttackPointDisplay();
         }
     }
 }

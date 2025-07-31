@@ -7,7 +7,7 @@ using UnityEngine;
 namespace _Game.Scripts.Skills
 {
     [Serializable]
-    public class DefenseBoostSkill : BaseSkill
+    public class CardDefenseBoostSkill : BaseSkill
     {
         [SerializeField] private int defenseBoost = 8;
         
@@ -15,7 +15,7 @@ namespace _Game.Scripts.Skills
         public override string Description => $"Increases next played card defense by {defenseBoost} points";
         public override SkillTargetType TargetType => SkillTargetType.Owner;
 
-        public DefenseBoostSkill()
+        public CardDefenseBoostSkill()
         {
         }
 

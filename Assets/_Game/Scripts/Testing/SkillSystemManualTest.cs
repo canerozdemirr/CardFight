@@ -47,16 +47,16 @@ namespace _Game.Scripts.Testing
             MockCardPlayer mockPlayer = new MockCardPlayer();
             
             // Test creating different skill types with new Initialize approach
-            var healthSkill = new HealthBoostSkill();
+            var healthSkill = new PlayerHealthBoostSkill();
             healthSkill.Initialize(mockPlayer);
             
             var shieldSkill = new ShieldSkill();
             shieldSkill.Initialize(mockPlayer);
             
-            var attackSkill = new AttackBoostSkill();
+            var attackSkill = new CardAttackBoostSkill();
             attackSkill.Initialize(mockPlayer);
             
-            var defenseSkill = new DefenseBoostSkill();
+            var defenseSkill = new CardDefenseBoostSkill();
             defenseSkill.Initialize(mockPlayer);
             
             Debug.Log($"Created skills: {healthSkill.SkillName}, {shieldSkill.SkillName}, {attackSkill.SkillName}, {defenseSkill.SkillName}");
@@ -67,18 +67,16 @@ namespace _Game.Scripts.Testing
             Debug.Log("Test 2: Applying and removing skills...");
             
             MockCardPlayer mockPlayer = new MockCardPlayer();
-            var healthSkill = new HealthBoostSkill();
+            var healthSkill = new PlayerHealthBoostSkill();
             healthSkill.Initialize(mockPlayer);
             
             int initialHealth = mockPlayer.Health.CurrentHealth;
-            
-            // Apply skill
+         
             healthSkill.Apply();
             int healthAfterSkill = mockPlayer.Health.CurrentHealth;
             
             Debug.Log($"Health before: {initialHealth}, after skill: {healthAfterSkill}");
             
-            // Remove skill (though health boost is permanent)
             healthSkill.Remove();
             
             Debug.Log("Skill application test completed");

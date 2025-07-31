@@ -20,6 +20,7 @@ namespace _Game.Scripts.Skills
 
         protected BaseSkill()
         {
+            
         }
 
         public virtual void Initialize(ICardPlayer target)

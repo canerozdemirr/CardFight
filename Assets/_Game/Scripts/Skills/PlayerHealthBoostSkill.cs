@@ -6,7 +6,7 @@ using UnityEngine;
 namespace _Game.Scripts.Skills
 {
     [Serializable]
-    public class HealthBoostSkill : BaseSkill
+    public class PlayerHealthBoostSkill : BaseSkill
     {
         [SerializeField] private int healthBoost = 20;
         
@@ -14,7 +14,7 @@ namespace _Game.Scripts.Skills
         public override string Description => $"Increases player health by {healthBoost} points";
         public override SkillTargetType TargetType => SkillTargetType.Owner;
 
-        public HealthBoostSkill()
+        public PlayerHealthBoostSkill()
         {
         }
 

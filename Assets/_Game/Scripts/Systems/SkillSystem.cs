@@ -5,7 +5,6 @@ using _Game.Scripts.Configs.SkillConfigs;
 using _Game.Scripts.Interfaces.Skills;
 using _Game.Scripts.Interfaces.Systems;
 using _Game.Scripts.Interfaces.Players;
-using _Game.Scripts.Configs.Skills;
 using _Game.Scripts.Events.Skill;
 using _Game.Scripts.Interfaces.Events;
 using GenericEventBus;
@@ -19,6 +18,7 @@ namespace _Game.Scripts.Systems
     {
         private readonly List<ISkill> _activeSkills = new();
         private readonly List<SkillConfig> _availableSkillConfigs = new();
+        private IReadOnlyList<ICardPlayer> _allPlayers;
         
         [Inject]
         private ICombatRegister _combatRegister;
@@ -34,14 +34,14 @@ namespace _Game.Scripts.Systems
         public void Initialize()
         {
             PopulateAvailableSkillConfigs();
+            _allPlayers = _combatRegister.RegisteredPlayers;
             Debug.Log($"Skill System initialized with {_availableSkillConfigs.Count} available skill configurations");
         }
 
         public void Dispose()
         {
-            // Remove all active skills
-            var skillsToRemove = _activeSkills.ToList();
-            foreach (var skill in skillsToRemove)
+            List<ISkill> skillsToRemove = _activeSkills.ToList();
+            foreach (ISkill skill in skillsToRemove)
             {
                 RemoveSkill(skill);
             }
@@ -58,8 +58,7 @@ namespace _Game.Scripts.Systems
             _activeSkills.Add(skill);
             skill.Apply();
             
-            // Fire event that skill was applied
-            _eventBus?.Raise(new OnSkillApplied(skill));
+            _eventBus.Raise(new OnSkillApplied(skill));
             
             Debug.Log($"Added skill: {skill.SkillName} (Total active: {_activeSkills.Count})");
         }
@@ -87,36 +86,32 @@ namespace _Game.Scripts.Systems
                 Debug.LogWarning("Skill owner is null, cannot pick random skill");
                 return null;
             }
-
-            // Get all registered players to determine targeting
-            var players = _combatRegister.RegisteredPlayers;
+            
+            IReadOnlyList<ICardPlayer> players = _combatRegister.RegisteredPlayers;
             if (players.Count == 0) 
             {
                 Debug.LogWarning("No registered players found for skill system");
                 return null;
             }
-
-            // Pick a random skill config
-            int randomConfigIndex = UnityEngine.Random.Range(0, _availableSkillConfigs.Count);
-            var selectedSkillConfig = _availableSkillConfigs[randomConfigIndex];
             
-            var skillImplementation = selectedSkillConfig.SkillImplementation;
+            int randomConfigIndex = UnityEngine.Random.Range(0, _availableSkillConfigs.Count);
+            SkillConfig selectedSkillConfig = _availableSkillConfigs[randomConfigIndex];
+            
+            ISkill skillImplementation = selectedSkillConfig.SkillImplementation;
             if (skillImplementation == null)
             {
                 Debug.LogWarning("Selected skill config has null skill implementation");
                 return null;
             }
 
-            // Determine the target based on skill's target type
             ICardPlayer targetPlayer = DetermineSkillTarget(skillImplementation.TargetType, skillOwner, players);
             if (targetPlayer == null)
             {
                 Debug.LogWarning($"Could not determine target for skill {skillImplementation.SkillName} with target type {skillImplementation.TargetType}");
                 return null;
             }
-
-            // Create a copy of the skill and initialize it for the target player
-            var skillCopy = (ISkill)Activator.CreateInstance(skillImplementation.GetType());
+            
+            ISkill skillCopy = (ISkill)Activator.CreateInstance(skillImplementation.GetType());
             skillCopy.Initialize(targetPlayer);
             
             Debug.Log($"Picked random skill: {skillCopy.SkillName} for owner: {skillOwner}, targeting: {targetPlayer}");
