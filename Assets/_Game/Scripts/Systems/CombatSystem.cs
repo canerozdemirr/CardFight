@@ -24,7 +24,7 @@ namespace _Game.Scripts.Systems
             {
                 Card attackingCard = _cardsInCombat.ElementAt(i).Value;
                 int randomIndex = UnityEngine.Random.Range(0, _cardsInCombat.Count);
-                while (randomIndex != i)
+                while (randomIndex == i)
                 {
                     randomIndex = UnityEngine.Random.Range(0, _cardsInCombat.Count);
                 }
@@ -32,8 +32,6 @@ namespace _Game.Scripts.Systems
                 (ICardPlayer defendingPlayer, Card defendingCard) = _cardsInCombat.ElementAt(randomIndex);
                 ExecuteAttack(attackingCard, defendingPlayer, defendingCard);
             }
-
-            CleanupCards();
         }
 
         private void ExecuteAttack(Card attackingCard, ICardPlayer defendingPlayer, Card defendingCard)
@@ -43,6 +41,8 @@ namespace _Game.Scripts.Systems
             {
                 defendingPlayer.TakeDamage(overflowDamage);
             }
+            attackingCard.OnDespawned();
+            defendingCard.OnDespawned();
         }
 
         private void CleanupCards()
@@ -60,6 +60,11 @@ namespace _Game.Scripts.Systems
             {
                 _cardsInCombat[cardPlayer] = card;
             }
+        }
+
+        public void RemoveCardFromCombat(ICardPlayer cardPlayer)
+        {
+            _cardsInCombat.Remove(cardPlayer);
         }
 
         public void Initialize()

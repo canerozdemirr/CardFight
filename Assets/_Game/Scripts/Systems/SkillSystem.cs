@@ -121,6 +121,7 @@ namespace _Game.Scripts.Systems
         {
             ISkill randomSkill = PickRandomSkill(skillOwner);
             _pickedSkill = randomSkill;
+            _eventBus.Raise(new OnSkillApplied(_pickedSkill));
             if (randomSkill != null)
             {
                 AddSkill(randomSkill);

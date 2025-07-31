@@ -20,6 +20,15 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         [Inject]
         private TurnConfig _turnConfig;
 
+        public override UniTask ArrangeDeck()
+        {
+            foreach (Cards.Card card in _cardList)
+            {
+                card.CardDeckCollisionHandler.SetDraggable(false);
+            }
+            return base.ArrangeDeck();
+        }
+
         public override async UniTask PlayCard()
         {
             int randomSecondDelay = Random.Range(0, _turnConfig.TurnDurationInSeconds);

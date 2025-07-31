@@ -62,6 +62,9 @@ namespace _Game.Scripts.Systems
 
             if (hit.collider == null || !hit.collider.TryGetComponent(out Card pickedCard)) 
                 return;
+
+            if (!pickedCard.CardDeckCollisionHandler.IsDraggable)
+                return;
             
             _draggingCard = pickedCard;
             _isDragging = true;

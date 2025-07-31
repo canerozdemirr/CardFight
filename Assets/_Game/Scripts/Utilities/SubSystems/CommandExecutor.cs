@@ -37,7 +37,7 @@ namespace _Game.Scripts.Utilities.SubSystems
             _commandQueue.Enqueue(command);
         }
 
-        public async UniTask ExecuteCommands(bool clearQueueInTheEnd = true)
+        public async UniTask ExecuteCommands()
         {
             if (_commandQueue.Count == 0)
             {
@@ -88,8 +88,6 @@ namespace _Game.Scripts.Utilities.SubSystems
             {
                 _currentCommandIndex = 0;
                 _totalCommandsExecuted = 0;
-                if (clearQueueInTheEnd)
-                    _commandQueue.Clear();
             }
         }
     }

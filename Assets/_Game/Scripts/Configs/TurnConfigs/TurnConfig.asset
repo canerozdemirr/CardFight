@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TurnConfig
   m_EditorClassIdentifier: 
   _turnConfigData:
-    _turnDurationInSeconds: 1
+    _turnDurationInSeconds: 30
     _maxTurnsBeforeGameEnd: 6

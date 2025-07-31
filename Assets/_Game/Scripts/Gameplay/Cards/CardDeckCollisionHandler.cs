@@ -12,6 +12,9 @@ namespace _Game.Scripts.Gameplay.Cards
         [SerializeField] private CardMovementHandler _cardMovementHandler;
         [SerializeField] private Collider2D _cardCollider;
 
+        [SerializeField] private bool _isDraggable;
+        public bool IsDraggable => _isDraggable;
+
         private DeckSpot _defaultDeckSpot;
         private DeckSpot _currentBestSpot;
 
@@ -35,6 +38,7 @@ namespace _Game.Scripts.Gameplay.Cards
                 _cardMovementHandler = GetComponent<CardMovementHandler>();
 
             _card = GetComponent<Card>();
+            _cardDeckState = CardDeckState.InBeginningDeck;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -174,6 +178,12 @@ namespace _Game.Scripts.Gameplay.Cards
         {
             _defaultDeckSpot = newDefaultSpot;
             _currentBestSpot = newDefaultSpot;
+        }
+        
+        public void SetDraggable(bool isDraggable)
+        {
+            _isDraggable = isDraggable;
+            _cardCollider.enabled = isDraggable;
         }
     }
 

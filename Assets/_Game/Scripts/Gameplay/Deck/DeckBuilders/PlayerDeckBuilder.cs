@@ -42,7 +42,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
             {
                 cardConfig = _cardListConfig.CardConfigList[i];
                 Card spawnedCard = _cardFactory.Create(cardConfig.CardData);
-                spawnedCard.transform.position =  _cardSpawnPoints[i].transform.position;
+                spawnedCard.transform.position = _cardSpawnPoints[i].transform.position;
                 _cardList.Add(spawnedCard);
             }
         }
@@ -54,22 +54,32 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         
         private void OnCardDropped(ref OnCardDropped eventData)
         {
+            CardDeckState previousCardDeckState = eventData.PickedCard.CardDeckCollisionHandler.CardDeckState;
             eventData.PickedCard.DropToDeckSlot();
 
             switch (eventData.PickedCard.CardDeckCollisionHandler.CardDeckState)
             {
                 case CardDeckState.InPlayerDeck:
-                    _eventBus.Raise(new OnPlayerCardPicked(eventData.PickedCard));
+                    _eventBus.Raise(new OnPlayerCardPickedToPlay(eventData.PickedCard));
                     break;
                 case CardDeckState.InSelectingDeck:
                     _playerDeck.AddCardToDeck(eventData.PickedCard);
+                    
                     if (_cardList.Contains(eventData.PickedCard))
                         _cardList.Remove(eventData.PickedCard);
+                    
+                    if (previousCardDeckState == CardDeckState.InPlayerDeck)
+                        _eventBus.Raise(new OnPlayerCardRemovedFromPlay(eventData.PickedCard));
+                    
                     break;
                 case CardDeckState.InBeginningDeck:
                     _playerDeck.RemoveCardFromDeck(eventData.PickedCard);
+                    
                     if (!_cardList.Contains(eventData.PickedCard))
                         _cardList.Add(eventData.PickedCard);
+                    
+                    if (previousCardDeckState == CardDeckState.InPlayerDeck)
+                        _eventBus.Raise(new OnPlayerCardRemovedFromPlay(eventData.PickedCard));
                     break;
             }
         }

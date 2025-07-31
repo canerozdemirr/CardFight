@@ -6,6 +6,6 @@ namespace _Game.Scripts.Interfaces.Commands
     {
         void Enqueue(ICommand command);
         
-        UniTask ExecuteCommands(bool clearQueueInTheEnd = true);
+        UniTask ExecuteCommands();
     }
 }

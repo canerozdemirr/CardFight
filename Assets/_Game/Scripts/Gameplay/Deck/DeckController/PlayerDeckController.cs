@@ -7,7 +7,6 @@ using Zenject;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckController
 {
-    using System;
     using DeckSpots;
     using Events.Turn;
     using Card = Cards.Card;
@@ -16,14 +15,16 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
     {
         [Inject] private GenericEventBus<IEvent> _eventBus;
 
+        [Inject] private ICombatSystem _combatSystem;
+
         private Card _pickedCardToPlay;
         private bool _isCardPickedToPlay;
 
         protected override void Initialize()
         {
             base.Initialize();
-            _eventBus.SubscribeTo<OnPlayerCardPicked>(OnPlayerCardPicked);
-            _eventBus.SubscribeTo<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
+            _eventBus.SubscribeTo<OnPlayerCardPickedToPlay>(OnPlayerCardPickedToPlay);
+            _eventBus.SubscribeTo<OnPlayerCardRemovedFromPlay>(OnPlayerCardRemovedFromPlay);
             _eventBus.SubscribeTo<OnPlayerTurnEnded>(OnPlayerTurnEnded);
         }
 
@@ -36,6 +37,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
                 if (pickedCard.TryGetComponent(out CardMovementHandler cardMovementHandler))
                 {
                     cardMovementHandler.MoveCardToDeck(deckSpot.transform.position);
+                    pickedCard.CardDeckCollisionHandler.OverrideDefaultDeckSpot(deckSpot);
                     await UniTask.WaitUntil(() => cardMovementHandler.DidMoveToDeck);
                 }
                 else
@@ -47,8 +49,8 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
 
         private void OnDisable()
         {
-            _eventBus.UnsubscribeFrom<OnPlayerCardPicked>(OnPlayerCardPicked);
-            _eventBus.UnsubscribeFrom<OnPlayerCardRemovedFromDeck>(OnPlayerCardRemovedFromDeck);
+            _eventBus.UnsubscribeFrom<OnPlayerCardPickedToPlay>(OnPlayerCardPickedToPlay);
+            _eventBus.UnsubscribeFrom<OnPlayerCardRemovedFromPlay>(OnPlayerCardRemovedFromPlay);
             _eventBus.UnsubscribeFrom<OnPlayerTurnEnded>(OnPlayerTurnEnded);
         }
 
@@ -59,14 +61,16 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
             _cardList.Remove(_pickedCardToPlay);
         }
         
-        private void OnPlayerCardPicked(ref OnPlayerCardPicked eventData)
+        private void OnPlayerCardPickedToPlay(ref OnPlayerCardPickedToPlay eventData)
         {
             _pickedCardToPlay = eventData.PlayedCard;
+            _combatSystem.AddCardToCombat(this, _pickedCardToPlay);
         }
         
-        private void OnPlayerCardRemovedFromDeck(ref OnPlayerCardRemovedFromDeck eventData)
+        private void OnPlayerCardRemovedFromPlay(ref OnPlayerCardRemovedFromPlay eventData)
         {
             _pickedCardToPlay = null;
+            _combatSystem.RemoveCardFromCombat(this);
         }
         
         private void OnPlayerTurnEnded(ref OnPlayerTurnEnded eventData)

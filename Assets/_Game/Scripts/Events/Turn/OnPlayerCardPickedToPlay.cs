@@ -2,11 +2,11 @@ using _Game.Scripts.Interfaces.Events;
 
 namespace _Game.Scripts.Events.Turn
 {
-    public struct OnPlayerCardPicked : IEvent
+    public struct OnPlayerCardPickedToPlay : IEvent
     {
         public readonly Gameplay.Cards.Card PlayedCard;
         
-        public OnPlayerCardPicked(Gameplay.Cards.Card playedCard)
+        public OnPlayerCardPickedToPlay(Gameplay.Cards.Card playedCard)
         {
             PlayedCard = playedCard;
         }

@@ -16,7 +16,7 @@ namespace _Game.Scripts.Commands.TurnCommands
         private bool _didPlayerEndTurn;
         public async UniTask Execute()
         {
-            _didPlayerEndTurn = false;
+            _didPlayerEndTurn = true;
             _eventBus.SubscribeTo<OnPlayerTurnEnded>(OnPlayerEndTurn);
             await UniTask.WaitUntil(() => _didPlayerEndTurn);
             _eventBus.UnsubscribeFrom<OnPlayerTurnEnded>(OnPlayerEndTurn);

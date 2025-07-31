@@ -391,7 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardVisualHandler: {fileID: 7450957302607312072}
   _cardDeckCollisionHandler: {fileID: 5210255500767686387}
-  _cardMovementHandler: {fileID: 0}
+  _cardMovementHandler: {fileID: 6541621889565976833}
 --- !u!114 &7450957302607312072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,8 +419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec3d888afb9e72459137ecdcfc1467a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardMovementHandler: {fileID: 0}
-  _cardCollider: {fileID: 0}
+  _cardMovementHandler: {fileID: 6541621889565976833}
+  _cardCollider: {fileID: 3079181563345390338}
+  _isDraggable: 1
 --- !u!114 &6541621889565976833
 MonoBehaviour:
   m_ObjectHideFlags: 0

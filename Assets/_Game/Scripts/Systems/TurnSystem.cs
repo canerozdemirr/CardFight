@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using _Game.Scripts.Commands.CardCommands;
 using _Game.Scripts.Commands.InputCommands;
 using _Game.Scripts.Commands.TimeCommands;
@@ -47,15 +48,22 @@ namespace _Game.Scripts.Systems
         private ICommandExecutor _playerTurnCommandExecutor;
         private ICommandExecutor _aiTurnCommandExecutor;
         
-        public ICardPlayer CurrentCardPlayer => _combatRegister.RegisteredPlayers[_currentPlayerIndex];
+        private List<ICommand> _playerTurnCommands = new();
+        private List<ICommand> _aiTurnCommands = new();
+
+        private ICardPlayer _cardPlayer;
+        public ICardPlayer CurrentCardPlayer => _cardPlayer;
         
         public void Initialize()
         {
             _playerTurnCommandExecutor = new CommandExecutor(_container);
             _aiTurnCommandExecutor = new CommandExecutor(_container);
             
+            CreateAITurnCommands();
+            CreatePlayerPlayTurnCommands();
+            
+            FillPlayerTurnCommands();
             FillAITurnCommands();
-            FillPlayerPlayTurnCommands();
 
             _allPlayersCount = _combatRegister.RegisteredPlayers.Count;
         }
@@ -63,6 +71,7 @@ namespace _Game.Scripts.Systems
         public async UniTask StartTurn()
         {
             ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
+            _cardPlayer = cardPlayer;
             _currentTurnCount++;
             
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Player)
@@ -95,29 +104,50 @@ namespace _Game.Scripts.Systems
                 _currentPlayerIndex++;
             }
 
+            FillPlayerTurnCommands();
+            FillAITurnCommands();
             _ = StartTurn();
         }
 
         public void EndTurn()
         {
-            _ = StartTurn();
+            
         }
         
-        private void FillPlayerPlayTurnCommands()
+        private void CreatePlayerPlayTurnCommands()
         {
-            _aiTurnCommandExecutor.Enqueue(new StartTurnTimerCommand(_turnConfig.TurnDurationInSeconds));
-            _playerTurnCommandExecutor.Enqueue(new EnableInputCommand());
-            _playerTurnCommandExecutor.Enqueue(new OpenUICommand<TurnCanvas>());
-            _playerTurnCommandExecutor.Enqueue(new OpenUICommand<CombatCanvas>());
-            _playerTurnCommandExecutor.Enqueue(new OpenUICommand<SkillCanvas>());
-            _playerTurnCommandExecutor.Enqueue(new AwaitPlayerEndTurnCommand());
-            _playerTurnCommandExecutor.Enqueue(new DisableInputCommand());
+            _playerTurnCommands.Add(new StartTurnTimerCommand(_turnConfig.TurnDurationInSeconds));
+            _playerTurnCommands.Add(new EnableInputCommand());
+            _playerTurnCommands.Add(new OpenUICommand<TurnCanvas>());
+            _playerTurnCommands.Add(new OpenUICommand<CombatCanvas>());
+            _playerTurnCommands.Add(new OpenUICommand<SkillCanvas>());
+            _playerTurnCommands.Add(new AwaitPlayerEndTurnCommand());
+            _playerTurnCommands.Add(new DisableInputCommand());
+            _playerTurnCommands.Add(new CloseUICommand<TurnCanvas>());
+            _playerTurnCommands.Add(new CloseUICommand<CombatCanvas>());
+            _playerTurnCommands.Add(new CloseUICommand<SkillCanvas>());
         }
         
-        private void FillAITurnCommands()
+        private void CreateAITurnCommands()
         {
-            _aiTurnCommandExecutor.Enqueue(new StartTurnTimerCommand(_turnConfig.TurnDurationInSeconds));
-            _aiTurnCommandExecutor.Enqueue(new AwaitPlayerPlayCardCommand());
+            _aiTurnCommands.Add(new StartTurnTimerCommand(_turnConfig.TurnDurationInSeconds));
+            _aiTurnCommands.Add(new AwaitPlayerPlayCardCommand());
+        }
+        
+        public void FillPlayerTurnCommands()
+        {
+            foreach (ICommand player in _playerTurnCommands)
+            {
+                _playerTurnCommandExecutor.Enqueue(player);
+            }
+        }
+        
+        public void FillAITurnCommands()
+        {
+            foreach (ICommand ai in _aiTurnCommands)
+            {
+                _aiTurnCommandExecutor.Enqueue(ai);
+            }
         }
         
         public void Dispose()
