@@ -22,6 +22,7 @@ namespace _Game.Scripts.UI
         [Inject] private GenericEventBus<IEvent> _eventBus;
 
         [Inject] private ITimeSystem _timeSystem;
+        [Inject] private ISkillSystem _skillSystem;
         
         public void Show()
         {
@@ -60,7 +61,12 @@ namespace _Game.Scripts.UI
 
         private void OnSkillUsed()
         {
-            _eventBus.Raise(new OnSkillUsed());
+            var randomSkill = _skillSystem.PickRandomSkill();
+            if (randomSkill != null)
+            {
+                _eventBus.Raise(new OnSkillUsed(randomSkill));
+                Debug.Log($"Player used skill: {randomSkill.SkillName}");
+            }
             _skillButton.gameObject.SetActive(false);
         }
 
