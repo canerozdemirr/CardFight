@@ -96,7 +96,11 @@ namespace _Game.Scripts.Systems
                     return;
                 }
 
-                _combatSystem.ResolveCombat();
+                // Only resolve combat if all players have actually played cards
+                if (_combatSystem.AllPlayersHavePlayedCards())
+                {
+                    _combatSystem.ResolveCombat();
+                }
                 _currentPlayerIndex = 0;
             }
             else
