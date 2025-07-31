@@ -54,6 +54,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         protected CardPlayerHealthData _cardPlayerHealthData;
         
         public IHealthComponent Health { get; private set; }
+        public IReadOnlyList<Card> AllCardsInHand => _cardList;
         public PlayerOccupation PlayerOccupation => _playerOccupation;
         
         public bool IsDeckSelected => _cardList.Count >= _cardPlayerData.TotalCardCount;

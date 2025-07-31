@@ -18,8 +18,7 @@ namespace _Game.Scripts.Systems
     {
         private readonly List<ISkill> _activeSkills = new();
         private readonly List<SkillConfig> _availableSkillConfigs = new();
-        private IReadOnlyList<ICardPlayer> _allPlayers;
-        
+
         [Inject]
         private ICombatRegister _combatRegister;
         
@@ -34,7 +33,6 @@ namespace _Game.Scripts.Systems
         public void Initialize()
         {
             PopulateAvailableSkillConfigs();
-            _allPlayers = _combatRegister.RegisteredPlayers;
             Debug.Log($"Skill System initialized with {_availableSkillConfigs.Count} available skill configurations");
         }
 
@@ -120,7 +118,7 @@ namespace _Game.Scripts.Systems
 
         public void ApplyRandomSkill(ICardPlayer skillOwner)
         {
-            var randomSkill = PickRandomSkill(skillOwner);
+            ISkill randomSkill = PickRandomSkill(skillOwner);
             if (randomSkill != null)
             {
                 AddSkill(randomSkill);
@@ -135,15 +133,14 @@ namespace _Game.Scripts.Systems
                     return skillOwner;
                 
                 case SkillTargetType.Opponent:
-                    // Find opponents (players with different occupation than skill owner)
-                    var opponents = allPlayers.Where(p => p != skillOwner && p.PlayerOccupation != skillOwner.PlayerOccupation).ToList();
+                    
+                    List<ICardPlayer> opponents = allPlayers.Where(p => p != skillOwner && p.PlayerOccupation != skillOwner.PlayerOccupation).ToList();
                     if (opponents.Count == 0)
                     {
                         Debug.LogWarning("No opponents found for skill targeting");
                         return null;
                     }
-                    
-                    // Pick a random opponent
+                  
                     int randomOpponentIndex = UnityEngine.Random.Range(0, opponents.Count);
                     return opponents[randomOpponentIndex];
                 
@@ -157,7 +154,7 @@ namespace _Game.Scripts.Systems
         {
             _availableSkillConfigs.Clear();
             
-            if (_skillListConfig?.AvailableSkills != null)
+            if (_skillListConfig.AvailableSkills != null)
             {
                 _availableSkillConfigs.AddRange(_skillListConfig.AvailableSkills);
                 Debug.Log($"Populated {_availableSkillConfigs.Count} skill configurations from SkillsConfig");

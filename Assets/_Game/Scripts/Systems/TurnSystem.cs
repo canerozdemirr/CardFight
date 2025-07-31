@@ -64,10 +64,9 @@ namespace _Game.Scripts.Systems
             ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
             _currentTurnCount++;
             
-            // Apply random skill when it's a player's turn (not AI/Bot)
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Player)
             {
-                _skillSystem?.ApplyRandomSkill(cardPlayer);
+                _skillSystem.ApplyRandomSkill(cardPlayer);
             }
             
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Bot)

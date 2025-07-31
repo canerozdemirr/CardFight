@@ -15,6 +15,8 @@ namespace _Game.Scripts.Skills
         public override string Description => $"Increases next played card attack by {attackBoost} points";
         public override SkillTargetType TargetType => SkillTargetType.Owner;
 
+        private int _cardPointDifference = 0;
+
         public CardAttackBoostSkill()
         {
         }
@@ -23,9 +25,12 @@ namespace _Game.Scripts.Skills
         {
             if (isApplied || targetPlayer == null) 
                 return;
-                
-            // Subscribe to card played event to apply boost
-            targetPlayer.OnCardPlayed += ApplyAttackBoost;
+
+            foreach (Card card in targetPlayer.AllCardsInHand)
+            {
+                card.AddAttackPoint(_cardPointDifference);
+            }
+            
             isApplied = true;
             Debug.Log($"Applied {SkillName} to player: next card gets +{attackBoost} attack");
         }
@@ -34,19 +39,14 @@ namespace _Game.Scripts.Skills
         {
             if (!isApplied || targetPlayer == null) 
                 return;
-                
-            targetPlayer.OnCardPlayed -= ApplyAttackBoost;
+            
+            foreach (Card card in targetPlayer.AllCardsInHand)
+            {
+                card.AddAttackPoint(-_cardPointDifference);
+            }
+            
             isApplied = false;
             Debug.Log($"Removed {SkillName} from player");
-        }
-
-        private void ApplyAttackBoost(Card card)
-        {
-            if (card != null)
-            {
-                Debug.Log($"Attack boost applied to {card.CardData?.CardName}: +{attackBoost} attack");
-                Remove();
-            }
         }
     }
 }
