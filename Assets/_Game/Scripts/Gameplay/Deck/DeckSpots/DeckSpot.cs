@@ -62,5 +62,10 @@ namespace _Game.Scripts.Gameplay.Deck.DeckSpots
         {
             _spotCollider.enabled = false;
         }
+
+        public void EnableSpot()
+        {
+            _spotCollider.enabled = true;
+        }
     }
 }

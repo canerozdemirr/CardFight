@@ -20,13 +20,9 @@ namespace _Game.Scripts.Gameplay.Cards
 
         private bool _didMoveToDeck;
         public bool DidMoveToDeck => _didMoveToDeck;
-        
-        private bool _isCardBeingDragged;
-        public bool IsCardBeingDragged => _isCardBeingDragged;
 
         public void MoveCardToDeck(Vector3 targetPosition, bool isRelative = false)
         {
-            // reset flag before starting the movement so callers can await completion
             _didMoveToDeck = false;
             transform.DOMove(targetPosition, _deckMovementDuration)
                 .SetEase(_deckMovementEaseType)
@@ -37,14 +33,10 @@ namespace _Game.Scripts.Gameplay.Cards
 
         public void MoveCardToPlayingDeck(Vector3 targetPosition, bool isRelative = false)
         {
-            transform.DOMove(targetPosition, _cardPlayMovementDuration)
+            _didMoveToDeck = false;
+            transform.DOMove(targetPosition, _cardPlayMovementDuration).OnComplete(() => _didMoveToDeck = true)
                 .SetEase(_playingMovementEaseType)
                 .SetRelative(isRelative).SetLink(gameObject, LinkBehaviour.KillOnDestroy);
-        }
-        
-        public void SetCardBeingDragged(bool isBeingDragged)
-        {
-            _isCardBeingDragged = isBeingDragged;
         }
     }
 }

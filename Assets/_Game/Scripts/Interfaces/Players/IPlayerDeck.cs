@@ -8,11 +8,9 @@ namespace _Game.Scripts.Interfaces.Players
     {
         bool IsDeckSelected { get; }
         void PrepareDeck();
-        void AddCard(Card card);
-        void RemoveCard(Card card);
+        void AddCardToDeck(Card card);
+        void RemoveCardFromDeck(Card card);
         UniTask ArrangeDeck();
-
-        PlayerTurnData PlayerTurnData { get; }
-        CardPlayerHealthData CardPlayerHealthData { get; }
+        PlayerOccupation PlayerOccupation { get; }
     }
 }

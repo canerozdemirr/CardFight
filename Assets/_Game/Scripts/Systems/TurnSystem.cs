@@ -14,7 +14,9 @@ using Zenject;
 
 namespace _Game.Scripts.Systems
 {
+    using Configs.TurnConfigs;
     using Cysharp.Threading.Tasks;
+    using Gameplay.CardPlayers.Data;
 
     [Serializable]
     public class TurnSystem : ITurnSystem, IInitializable, IDisposable
@@ -30,6 +32,9 @@ namespace _Game.Scripts.Systems
         
         [Inject] 
         private ICombatSystem _combatSystem;
+        
+        [Inject]
+        private TurnConfig _turnConfig;
 
         private int _currentTurnCount;
         private int _currentPlayerIndex;
@@ -42,7 +47,6 @@ namespace _Game.Scripts.Systems
         
         public void Initialize()
         {
-            _currentTurnCount = UnityEngine.Random.Range(0, 2);
             _playerTurnCommandExecutor = new CommandExecutor(_container);
             _aiTurnCommandExecutor = new CommandExecutor(_container);
             
@@ -54,8 +58,10 @@ namespace _Game.Scripts.Systems
 
         public async UniTask StartTurn()
         {
-            _currentPlayerIndex++;
-            if (_currentTurnCount == 0)
+            ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
+            _currentTurnCount++;
+            
+            if (cardPlayer.PlayerOccupation == PlayerOccupation.Bot)
             {
                 await _aiTurnCommandExecutor.ExecuteCommands();
             }
@@ -66,31 +72,42 @@ namespace _Game.Scripts.Systems
             
             if (_currentPlayerIndex >= _allPlayersCount)
             {
+                if (_currentTurnCount >= _turnConfig.MaxTurnsBeforeGameEnd)
+                {
+                    //GAME IS FINISHED!
+                    return;
+                }
+
                 _combatSystem.ResolveCombat();
                 _currentPlayerIndex = 0;
             }
+            else
+            {
+                _currentPlayerIndex++;
+            }
+
+            _ = StartTurn();
         }
 
         public void EndTurn()
         {
-            _currentTurnCount = _currentTurnCount == 0 ? 1 : 0;
             _ = StartTurn();
         }
         
         private void FillPlayerPlayTurnCommands()
         {
-            _aiTurnCommandExecutor.Enqueue(new StartTurnTimerCommand(10));
+            _aiTurnCommandExecutor.Enqueue(new StartTurnTimerCommand(_turnConfig.TurnDurationInSeconds));
             _playerTurnCommandExecutor.Enqueue(new EnableInputCommand());
             _playerTurnCommandExecutor.Enqueue(new OpenTurnUICommand());
+            _playerTurnCommandExecutor.Enqueue(new OpenCombatUICommand());
             _playerTurnCommandExecutor.Enqueue(new AwaitPlayerPlayCardCommand());
             _playerTurnCommandExecutor.Enqueue(new DisableInputCommand());
         }
         
         private void FillAITurnCommands()
         {
-            _aiTurnCommandExecutor.Enqueue(new StartTurnTimerCommand(10));
+            _aiTurnCommandExecutor.Enqueue(new StartTurnTimerCommand(_turnConfig.TurnDurationInSeconds));
             _aiTurnCommandExecutor.Enqueue(new AwaitPlayerPlayCardCommand());
-            _aiTurnCommandExecutor.Enqueue(new EndTurnCommand());
         }
         
         public void Dispose()

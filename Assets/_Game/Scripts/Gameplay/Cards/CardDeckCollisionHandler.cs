@@ -5,18 +5,24 @@ using UnityEngine;
 
 namespace _Game.Scripts.Gameplay.Cards
 {
+    using Utilities;
+
     public class CardDeckCollisionHandler : MonoBehaviour
     {
         [SerializeField] private CardMovementHandler _cardMovementHandler;
         [SerializeField] private Collider2D _cardCollider;
-        
+
         private DeckSpot _defaultDeckSpot;
         private DeckSpot _currentBestSpot;
 
         private Card _card;
+
+        private readonly List<DeckSpot> _collidingDeckSpots = new();
+
+        private CardDeckState _cardDeckState;
         
-        private List<DeckSpot> _collidingDeckSpots = new List<DeckSpot>();
-        
+        public CardDeckState CardDeckState => _cardDeckState;
+
         public DeckSpot CollidedDeckSpot => _currentBestSpot ?? _defaultDeckSpot;
         public DeckSpot DefaultDeckSpot => _defaultDeckSpot;
 
@@ -24,7 +30,7 @@ namespace _Game.Scripts.Gameplay.Cards
         {
             if (_cardCollider == null)
                 _cardCollider = GetComponent<Collider2D>();
-                
+
             if (_cardMovementHandler == null)
                 _cardMovementHandler = GetComponent<CardMovementHandler>();
 
@@ -44,29 +50,21 @@ namespace _Game.Scripts.Gameplay.Cards
                     _currentBestSpot = _defaultDeckSpot;
                 }
             }
-            
+
             _collidingDeckSpots.Add(deckSpot);
             UpdateBestCollisionSpot();
         }
-        
+
         private void OnTriggerExit2D(Collider2D other)
         {
             if (!other.gameObject.TryGetComponent(out DeckSpot deckSpot))
                 return;
 
-            if (!_collidingDeckSpots.Contains(deckSpot)) 
+            if (!_collidingDeckSpots.Contains(deckSpot))
                 return;
-            
+
             _collidingDeckSpots.Remove(deckSpot);
             UpdateBestCollisionSpot();
-        }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            if (_cardMovementHandler.IsCardBeingDragged)
-            {
-                UpdateBestCollisionSpot();
-            }
         }
 
         private void UpdateBestCollisionSpot()
@@ -96,29 +94,29 @@ namespace _Game.Scripts.Gameplay.Cards
         private bool CanDropToCurrentSpot()
         {
             DeckSpot targetSpot = CollidedDeckSpot;
-            
+
             if (targetSpot == _defaultDeckSpot)
                 return true;
-            
+
             return targetSpot != null && targetSpot.IsSpotEmpty;
         }
 
         public void DropCard()
         {
             DeckSpot targetSpot = GetValidDropSpot();
-            
+
             if (targetSpot != null)
             {
                 transform.position = targetSpot.Position;
 
-                if (targetSpot == _defaultDeckSpot) 
+                if (targetSpot == _defaultDeckSpot)
                     return;
-                
+
                 if (_defaultDeckSpot != null && _defaultDeckSpot.OccupyingCard == _card)
                 {
                     _defaultDeckSpot.FreeSpot();
                 }
-               
+
                 targetSpot.TryOccupySpot(_card);
                 _defaultDeckSpot = targetSpot;
             }
@@ -126,23 +124,25 @@ namespace _Game.Scripts.Gameplay.Cards
             {
                 ReturnToDefaultSpot();
             }
+            
+            UpdateCardDeckState();
         }
 
         private DeckSpot GetValidDropSpot()
         {
             DeckSpot targetSpot = CollidedDeckSpot;
-          
+
             if (targetSpot == null)
                 return _defaultDeckSpot;
-          
+
             return CanDropToCurrentSpot() ? targetSpot : _defaultDeckSpot;
         }
 
         private void ReturnToDefaultSpot()
         {
-            if (_defaultDeckSpot == null) 
+            if (_defaultDeckSpot == null)
                 return;
-            
+
             transform.position = _defaultDeckSpot.Position;
             _currentBestSpot = _defaultDeckSpot;
         }
@@ -153,18 +153,34 @@ namespace _Game.Scripts.Gameplay.Cards
             if (_currentBestSpot == null)
                 _currentBestSpot = deckSpot;
         }
-
-        private float GetCurrentOverlapPercentage()
+        
+        private void UpdateCardDeckState()
         {
-            if (_currentBestSpot == null || _cardCollider == null)
-                return 0f;
-                
-            return _currentBestSpot.GetOverlapPercentage(_cardCollider);
+            if (_currentBestSpot.gameObject.CompareTag(Constants.BeginningDeckSpotTag))
+            {
+                _cardDeckState = CardDeckState.InBeginningDeck;
+            }
+            else if (_currentBestSpot.gameObject.CompareTag(Constants.SelectedDeckSpotTag))
+            {
+                _cardDeckState = CardDeckState.InSelectingDeck;
+            }
+            else
+            {
+                _cardDeckState = CardDeckState.InPlayerDeck;
+            }
         }
-
-        public bool IsMostlyOverlapping()
+        
+        public void OverrideDefaultDeckSpot(DeckSpot newDefaultSpot)
         {
-            return GetCurrentOverlapPercentage() > 0.5f; // 50% overlap threshold
+            _defaultDeckSpot = newDefaultSpot;
+            _currentBestSpot = newDefaultSpot;
         }
+    }
+
+    public enum CardDeckState
+    {
+        InPlayerDeck = 0,
+        InSelectingDeck = 1,
+        InBeginningDeck = 2
     }
 }

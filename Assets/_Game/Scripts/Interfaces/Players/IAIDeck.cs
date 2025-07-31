@@ -11,6 +11,5 @@ namespace _Game.Scripts.Interfaces.Players
 
         void PrepareDeck();
         void AddCardToDeck(Card card);
-        PlayerTurnData PlayerTurnData { get; }
     }
 }

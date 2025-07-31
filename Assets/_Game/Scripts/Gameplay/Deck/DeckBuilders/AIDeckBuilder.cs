@@ -12,6 +12,8 @@ using Zenject;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 {
+    using DeckController;
+
     public class AIDeckBuilder : BaseDeckBuilder, IAIDeckBuilder
     {
         [SerializeField]
@@ -21,8 +23,8 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        [Inject] 
-        private IAIDeck _aiDeck;
+        [SerializeField] 
+        private BaseDeckController _aiDeck;
 
         public void PrepareAIDeck()
         {

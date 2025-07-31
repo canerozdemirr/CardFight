@@ -13,9 +13,6 @@ namespace _Game.Scripts.Commands.DeckCommands
     public class AwaitPlayerDeckBuildCommand : ICommand
     {
         [Inject]
-        private IPlayerDeck _playerDeck;
-        
-        [Inject]
         private GenericEventBus<IEvent> _eventBus;
         
         private bool _isDeckBuildingEnded;

@@ -8,6 +8,7 @@ using Zenject;
 namespace _Game.Scripts.Gameplay.Cards
 {
     using Health;
+    using Interfaces.Players;
 
     public class Card : MonoBehaviour, IDisposable, IPoolable<CardData, IMemoryPool>
     {

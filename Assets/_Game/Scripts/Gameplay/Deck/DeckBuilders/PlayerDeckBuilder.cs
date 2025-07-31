@@ -1,27 +1,31 @@
-using System;
 using System.Collections.Generic;
 using _Game.Scripts.Configs.CardConfigs;
 using _Game.Scripts.Events.Card;
-using _Game.Scripts.Gameplay.Cards;
 using _Game.Scripts.Gameplay.Deck.DeckSpots;
 using _Game.Scripts.Interfaces.Deck;
-using _Game.Scripts.Interfaces.GameObjects;
-using _Game.Scripts.Interfaces.Players;
 using UnityEngine;
-using Zenject;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
 {
+    using Cards;
+    using DeckController;
+    using Events.Turn;
+    using UnityEngine.Serialization;
+
     public sealed class PlayerDeckBuilder : BaseDeckBuilder, IPlayerDeckBuilder
     {
         [SerializeField]
         private List<DeckSpot> _cardSpawnPoints;
         
+        [FormerlySerializedAs("_playerDeckPoints")] 
         [SerializeField]
-        private List<DeckSpot> _playerDeckPoints;
+        private List<DeckSpot> _selectedCardDeckPoints;
+        
+        [SerializeField]
+        private List<DeckSpot> _playedCardDeckPoints;
 
-        [Inject] 
-        private IPlayerDeck _playerDeck;
+        [SerializeField] 
+        private BaseDeckController _playerDeck;
 
         public void PreparePlayerDeck()
         {
@@ -33,11 +37,11 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         private void SpawnBeginningDeck()
         {
             CardConfig cardConfig;
-            _cardList = new List<Cards.Card>(_cardListConfig.CardConfigList.Length);
+            _cardList = new List<Card>(_cardListConfig.CardConfigList.Length);
             for (int i = 0; i < _cardListConfig.CardConfigList.Length; i++)
             {
                 cardConfig = _cardListConfig.CardConfigList[i];
-                Cards.Card spawnedCard = _cardFactory.Create(cardConfig.CardData);
+                Card spawnedCard = _cardFactory.Create(cardConfig.CardData);
                 spawnedCard.transform.position =  _cardSpawnPoints[i].transform.position;
                 _cardList.Add(spawnedCard);
             }
@@ -50,31 +54,31 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
         
         private void OnCardDropped(ref OnCardDropped eventData)
         {
-            if (!_cardList.Contains(eventData.PickedCard))
-                return;
-
             eventData.PickedCard.DropToDeckSlot();
 
-            /*switch (eventData.PickedCard.CardDeckCollisionHandler.CardDeckState)
+            switch (eventData.PickedCard.CardDeckCollisionHandler.CardDeckState)
             {
+                case CardDeckState.InPlayerDeck:
+                    _eventBus.Raise(new OnPlayerCardPicked(eventData.PickedCard));
+                    break;
                 case CardDeckState.InSelectingDeck:
-                    _playerDeck.AddCard(eventData.PickedCard);
-                    _cardList.Remove(eventData.PickedCard);
+                    _playerDeck.AddCardToDeck(eventData.PickedCard);
+                    if (_cardList.Contains(eventData.PickedCard))
+                        _cardList.Remove(eventData.PickedCard);
                     break;
                 case CardDeckState.InBeginningDeck:
-                    _playerDeck.RemoveCard(eventData.PickedCard);
-                    _cardList.Add(eventData.PickedCard);
+                    _playerDeck.RemoveCardFromDeck(eventData.PickedCard);
+                    if (!_cardList.Contains(eventData.PickedCard))
+                        _cardList.Add(eventData.PickedCard);
                     break;
-                case CardDeckState.InPlayerDeck:
-                    break;
-            }*/
+            }
         }
         
         public void ClearUnusedCards()
         {
             for (int i = _cardList.Count - 1; i >= 0; i--)
             {
-                Cards.Card unusedCard = _cardList[i];
+                Card unusedCard = _cardList[i];
                 unusedCard.ReturnToPool();
             }
             _cardList.Clear();
@@ -85,11 +89,18 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
             foreach (DeckSpot deckSpot in _cardSpawnPoints)
             {
                 deckSpot.DisableSpot();
+                deckSpot.gameObject.SetActive(false);
             }
 
-            foreach (DeckSpot deckSpot in _playerDeckPoints)
+            foreach (DeckSpot deckSpot in _selectedCardDeckPoints)
             {
                 deckSpot.DisableSpot();
+                deckSpot.gameObject.SetActive(false);
+            }
+
+            foreach (DeckSpot deckSpot in _playedCardDeckPoints)
+            {
+                deckSpot.EnableSpot();
             }
         }
     }

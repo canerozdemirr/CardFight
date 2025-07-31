@@ -9,11 +9,17 @@ using System;
 namespace _Game.Scripts.Gameplay.Deck.DeckController
 {
     using Cards;
+    using Cysharp.Threading.Tasks;
+    using DeckSpots;
+    using Events.Deck;
+    using GenericEventBus;
     using Health;
+    using Interfaces.Events;
     using Interfaces.Health;
     using Interfaces.Players;
+    using Interfaces.Systems;
 
-    public abstract class BaseDeckController : MonoBehaviour, ICardPlayer
+    public abstract class BaseDeckController : MonoBehaviour, ICardPlayer, IPlayerDeck
     {
         [BoxGroup("Deck Settings")]
         [SerializeField] 
@@ -21,18 +27,36 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         
         [BoxGroup("Deck Settings")]
         [SerializeField] 
-        protected Transform[] _deckPoints;
+        protected DeckSpot[] _deckPoints;
+        
+        [BoxGroup("Deck Settings")]
+        [SerializeField] 
+        protected DeckSpot _playingDeckSpot;
         
         protected List<Card> _cardList;
 
         [Inject] 
         protected CardPlayerListConfig _cardPlayerListConfig;
 
+        [Inject] 
+        protected IDeckBuildingSystem _deckBuildingSystem;
+        
+        [Inject] 
+        protected ICombatRegister _combatRegister;
+        
+        [Inject] 
+        protected ICombatSystem _combatSystem;
+        
+        [Inject]
+        protected GenericEventBus<IEvent> _eventBus;
+
         protected CardPlayerData _cardPlayerData;
         protected CardPlayerHealthData _cardPlayerHealthData;
-        protected PlayerTurnData _playerTurnData;
         
         public IHealthComponent Health { get; private set; }
+        public PlayerOccupation PlayerOccupation => _playerOccupation;
+        
+        public bool IsDeckSelected => _cardList.Count >= _cardPlayerData.TotalCardCount;
         
         public event Action<ICardPlayer> OnPlayerDeath;
         public event Action<Card> OnCardPlayed;
@@ -46,10 +70,11 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
                 
                 _cardPlayerData = cardPlayerConfig.CardPlayerData;
                 _cardPlayerHealthData = cardPlayerConfig.CardPlayerHealthData;
-                _playerTurnData = cardPlayerConfig.PlayerTurnData;
             }
             _cardList = new List<Card>(_cardPlayerData.TotalCardCount);
             Health = new HealthComponent(_cardPlayerHealthData.PlayerHealth);
+            _deckBuildingSystem.AddPlayerDeck(this);
+            _combatRegister.RegisterPlayer(this);
         }
         
         public void TakeDamage(int damage)
@@ -57,9 +82,35 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
             Health.TakeDamage(damage);
         }
 
-        public virtual void PlayCard(Card card)
+        public virtual async UniTask PlayCard()
         {
-            _cardList.Remove(card);
+            await UniTask.WaitForEndOfFrame();
+        }
+        
+        public virtual void PrepareDeck()
+        {
+            Initialize();
+        }
+
+        public virtual void AddCardToDeck(Card card)
+        {
+            if (!_cardList.Contains(card))
+                _cardList.Add(card);
+
+            _eventBus.Raise(new OnPlayerCardAddedToPlayDeck(this));
+        }
+
+        public virtual void RemoveCardFromDeck(Card card)
+        {
+            if (_cardList.Contains(card))
+                _cardList.Remove(card);
+            
+            _eventBus.Raise(new OnPlayerCardRemovedFromPlayerDeck(this));
+        }
+
+        public virtual async UniTask ArrangeDeck()
+        {
+            await UniTask.WaitForEndOfFrame();
         }
     }
 }

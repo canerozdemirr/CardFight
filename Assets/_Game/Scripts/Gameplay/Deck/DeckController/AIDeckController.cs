@@ -10,46 +10,19 @@ using Zenject;
 
 namespace _Game.Scripts.Gameplay.Deck.DeckController
 {
-    public class AIDeckController : BaseDeckController, IAIDeck
+    using Configs.TurnConfigs;
+
+    public class AIDeckController : BaseDeckController
     {
         [SerializeReference, SubclassSelector] 
         private ICardPickStrategy _cardPickStrategy;
-
-        [SerializeField] 
-        private DeckSpot _playingDeckSpot;
-        public PlayerTurnData PlayerTurnData => _playerTurnData;
-
-        [Inject] private ICombatRegister _combatRegister;
-
-        [Inject] private ICombatSystem _combatSystem;
         
-        public bool IsDeckSelected => _cardList.Count >= _cardPlayerData.TotalCardCount;
-        public void PrepareDeck()
-        {
-            Initialize();
-        }
+        [Inject]
+        private TurnConfig _turnConfig;
 
-        protected override void Initialize()
+        public override async UniTask PlayCard()
         {
-            base.Initialize();
-            _combatRegister.RegisterPlayer(this);
-        }
-
-        public void AddCardToDeck(Cards.Card card)
-        {
-            if (!_cardList.Contains(card))
-            {
-                _cardList.Add(card);
-            }
-            else
-            {
-                Debug.LogWarning($"Card {card.name} is already in the deck.");
-            }
-        }
-
-        public async UniTask PlayCard()
-        {
-            int randomSecondDelay = Random.Range(0, _playerTurnData.turnDurationInSeconds);
+            int randomSecondDelay = Random.Range(0, _turnConfig.TurnDurationInSeconds);
             await UniTask.WaitForSeconds(randomSecondDelay);
             
             Cards.Card pickedCard = _cardPickStrategy.PickACard(_cardList);

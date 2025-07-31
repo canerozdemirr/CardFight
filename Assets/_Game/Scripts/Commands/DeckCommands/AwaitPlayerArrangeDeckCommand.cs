@@ -7,16 +7,26 @@ using Zenject;
 
 namespace _Game.Scripts.Commands.DeckCommands
 {
+    using Interfaces.Systems;
+
     [Serializable]
     public class AwaitPlayerArrangeDeckCommand : ICommand
     {
-        [Inject] private IPlayerDeck _playerDeck;
-        [Inject] private IPlayerDeckBuilder _playerDeckBuilder;
+        [Inject] 
+        private IDeckBuildingSystem _deckBuildingSystem;
+        
+        [Inject] 
+        private IPlayerDeckBuilder _playerDeckBuilder;
+        
         public async UniTask Execute()
         {
-            _playerDeckBuilder.CloseDeckSlots();
             _playerDeckBuilder.ClearUnusedCards();
-            await _playerDeck.ArrangeDeck();
+            _playerDeckBuilder.CloseDeckSlots();
+            
+            foreach (IPlayerDeck deck in _deckBuildingSystem.AllRegisteredDecks)
+            {
+                await deck.ArrangeDeck();
+            }
         }
     }
 }

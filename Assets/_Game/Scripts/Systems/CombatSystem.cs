@@ -14,6 +14,9 @@ namespace _Game.Scripts.Systems
     {
         private List<ICardPlayer> _registeredPlayers = new();
         private Dictionary<ICardPlayer, Card> _cardsInCombat = new();
+        
+        [Inject]
+        private ITurnSystem _turnSystem;
 
         public void ResolveCombat()
         {
@@ -21,11 +24,17 @@ namespace _Game.Scripts.Systems
             {
                 Card attackingCard = _cardsInCombat.ElementAt(i).Value;
                 int randomIndex = UnityEngine.Random.Range(0, _cardsInCombat.Count);
+                while (randomIndex != i)
+                {
+                    randomIndex = UnityEngine.Random.Range(0, _cardsInCombat.Count);
+                }
+                
                 (ICardPlayer defendingPlayer, Card defendingCard) = _cardsInCombat.ElementAt(randomIndex);
                 ExecuteAttack(attackingCard, defendingPlayer, defendingCard);
             }
 
-            CleanupDefeatedCards();
+            CleanupCards();
+            _ = _turnSystem.StartTurn();
         }
 
         private void ExecuteAttack(Card attackingCard, ICardPlayer defendingPlayer, Card defendingCard)
@@ -48,7 +57,7 @@ namespace _Game.Scripts.Systems
             }
         }
 
-        private void CleanupDefeatedCards()
+        private void CleanupCards()
         {
             foreach (ICardPlayer player in _registeredPlayers)
             {
