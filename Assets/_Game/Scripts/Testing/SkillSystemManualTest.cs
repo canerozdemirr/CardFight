@@ -46,11 +46,18 @@ namespace _Game.Scripts.Testing
             // Create a mock player (would normally be injected)
             MockCardPlayer mockPlayer = new MockCardPlayer();
             
-            // Test creating different skill types
-            var healthSkill = new HealthBoostSkill(mockPlayer, 25);
-            var shieldSkill = new ShieldSkill(mockPlayer, 10);
-            var attackSkill = new AttackBoostSkill(mockPlayer, 5);
-            var defenseSkill = new DefenseBoostSkill(mockPlayer, 3);
+            // Test creating different skill types with new Initialize approach
+            var healthSkill = new HealthBoostSkill();
+            healthSkill.Initialize(mockPlayer);
+            
+            var shieldSkill = new ShieldSkill();
+            shieldSkill.Initialize(mockPlayer);
+            
+            var attackSkill = new AttackBoostSkill();
+            attackSkill.Initialize(mockPlayer);
+            
+            var defenseSkill = new DefenseBoostSkill();
+            defenseSkill.Initialize(mockPlayer);
             
             Debug.Log($"Created skills: {healthSkill.SkillName}, {shieldSkill.SkillName}, {attackSkill.SkillName}, {defenseSkill.SkillName}");
         }
@@ -60,7 +67,8 @@ namespace _Game.Scripts.Testing
             Debug.Log("Test 2: Applying and removing skills...");
             
             MockCardPlayer mockPlayer = new MockCardPlayer();
-            var healthSkill = new HealthBoostSkill(mockPlayer, 30);
+            var healthSkill = new HealthBoostSkill();
+            healthSkill.Initialize(mockPlayer);
             
             int initialHealth = mockPlayer.Health.CurrentHealth;
             

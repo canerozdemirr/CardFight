@@ -87,7 +87,8 @@ namespace _Game.Scripts.Gameplay
         {
             Debug.Log("--- Demonstrating Health Boost Skill ---");
             
-            var skill = new HealthBoostSkill(_demoPlayer, 25);
+            var skill = new HealthBoostSkill();
+            skill.Initialize(_demoPlayer);
             LogPlayerStats("Before Health Boost");
             
             skill.Apply();
@@ -100,7 +101,8 @@ namespace _Game.Scripts.Gameplay
         {
             Debug.Log("--- Demonstrating Shield Skill ---");
             
-            var skill = new ShieldSkill(_demoPlayer, 20);
+            var skill = new ShieldSkill();
+            skill.Initialize(_demoPlayer);
             LogPlayerStats("Before Shield");
             
             skill.Apply();
@@ -118,7 +120,8 @@ namespace _Game.Scripts.Gameplay
         {
             Debug.Log("--- Demonstrating Attack Boost Skill ---");
             
-            var skill = new AttackBoostSkill(_demoPlayer, 15);
+            var skill = new AttackBoostSkill();
+            skill.Initialize(_demoPlayer);
             skill.Apply();
             
             // Simulate card being played
@@ -132,7 +135,8 @@ namespace _Game.Scripts.Gameplay
         {
             Debug.Log("--- Demonstrating Defense Boost Skill ---");
             
-            var skill = new DefenseBoostSkill(_demoPlayer, 12);
+            var skill = new DefenseBoostSkill();
+            skill.Initialize(_demoPlayer);
             skill.Apply();
             
             // Simulate card being played

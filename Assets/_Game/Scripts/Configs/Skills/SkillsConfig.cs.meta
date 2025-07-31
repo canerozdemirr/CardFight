@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: 7becd49f895543b3a4f6c2fb0a86bfbf
+guid: 47138cbca0394193a52d14fedc58f9a5
 MonoImporter:
-  externalObjects: Assets/_Game/Scripts/Configs/Skills/SkillConfig.cs
+  externalObjects: Assets/_Game/Scripts/Configs/Skills/SkillsConfig.cs
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0

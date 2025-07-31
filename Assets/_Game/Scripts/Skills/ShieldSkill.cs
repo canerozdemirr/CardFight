@@ -1,20 +1,23 @@
+using System;
 using _Game.Scripts.Interfaces.Skills;
 using _Game.Scripts.Interfaces.Players;
 using UnityEngine;
 
 namespace _Game.Scripts.Skills
 {
+    [Serializable]
     public class ShieldSkill : BaseSkill
     {
-        private readonly int shieldAmount;
+        [SerializeField] private int shieldAmount = 15;
+        
+        [NonSerialized]
         private int originalMaxHealth;
         
         public override string SkillName => "Shield";
         public override string Description => $"Provides {shieldAmount} shield points to the player";
 
-        public ShieldSkill(ICardPlayer target, int shield = 15) : base(target)
+        public ShieldSkill()
         {
-            shieldAmount = shield;
         }
 
         public override void Apply()

@@ -1,3 +1,4 @@
+using System;
 using _Game.Scripts.Interfaces.Skills;
 using _Game.Scripts.Interfaces.Players;
 using _Game.Scripts.Gameplay.Cards;
@@ -5,16 +6,16 @@ using UnityEngine;
 
 namespace _Game.Scripts.Skills
 {
+    [Serializable]
     public class DefenseBoostSkill : BaseSkill
     {
-        private readonly int defenseBoost;
+        [SerializeField] private int defenseBoost = 8;
         
         public override string SkillName => "Defense Boost";
         public override string Description => $"Increases next played card defense by {defenseBoost} points";
 
-        public DefenseBoostSkill(ICardPlayer target, int boostAmount = 8) : base(target)
+        public DefenseBoostSkill()
         {
-            defenseBoost = boostAmount;
         }
 
         public override void Apply()

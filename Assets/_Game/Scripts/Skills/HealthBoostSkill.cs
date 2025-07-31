@@ -1,19 +1,20 @@
+using System;
 using _Game.Scripts.Interfaces.Skills;
 using _Game.Scripts.Interfaces.Players;
 using UnityEngine;
 
 namespace _Game.Scripts.Skills
 {
+    [Serializable]
     public class HealthBoostSkill : BaseSkill
     {
-        private readonly int healthBoost;
+        [SerializeField] private int healthBoost = 20;
         
         public override string SkillName => "Health Boost";
         public override string Description => $"Increases player health by {healthBoost} points";
 
-        public HealthBoostSkill(ICardPlayer target, int boostAmount = 20) : base(target)
+        public HealthBoostSkill()
         {
-            healthBoost = boostAmount;
         }
 
         public override void Apply()

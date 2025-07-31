@@ -64,8 +64,8 @@ namespace _Game.Scripts.Systems
             ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
             _currentTurnCount++;
             
-            // Randomly apply skills at the start of each turn (demonstration)
-            if (UnityEngine.Random.Range(0f, 1f) < 0.3f) // 30% chance
+            // Apply random skill when it's a player's turn (not AI/Bot)
+            if (cardPlayer.PlayerOccupation == PlayerOccupation.Player)
             {
                 _skillSystem?.ApplyRandomSkill();
             }
