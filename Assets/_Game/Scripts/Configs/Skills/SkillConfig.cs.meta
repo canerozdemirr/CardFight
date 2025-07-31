@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 7becd49f895543b3a4f6c2fb0a86bfbf
+MonoImporter:
+  externalObjects: Assets/_Game/Scripts/Configs/Skills/SkillConfig.cs
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData:
+  assetBundleName:
+  assetBundleVariant:

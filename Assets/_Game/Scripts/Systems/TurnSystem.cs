@@ -33,8 +33,11 @@ namespace _Game.Scripts.Systems
         [Inject] 
         private ICombatSystem _combatSystem;
         
-        [Inject]
+        [Inject] 
         private TurnConfig _turnConfig;
+        
+        [Inject]
+        private ISkillSystem _skillSystem;
 
         private int _currentTurnCount;
         private int _currentPlayerIndex;
@@ -60,6 +63,12 @@ namespace _Game.Scripts.Systems
         {
             ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
             _currentTurnCount++;
+            
+            // Apply random skill when it's a player's turn (not AI/Bot)
+            if (cardPlayer.PlayerOccupation == PlayerOccupation.Player)
+            {
+                _skillSystem?.ApplyRandomSkill(cardPlayer);
+            }
             
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Bot)
             {

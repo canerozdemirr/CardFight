@@ -19,6 +19,7 @@ namespace _Game.Scripts.Installers
             Container.BindInterfacesAndSelfTo<TurnSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<CombatSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<TimeSystem>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SkillSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<UIManagementSystem>().FromInstance(_uiManagementSystem).AsSingle();
             
             Container.BindExecutionOrder<GenericEventBus<IEvent>>(0);
@@ -27,7 +28,8 @@ namespace _Game.Scripts.Installers
             Container.BindExecutionOrder<CombatSystem>(3);
             Container.BindExecutionOrder<TurnSystem>(4);
             Container.BindExecutionOrder<TimeSystem>(5);
-            Container.BindExecutionOrder<UIManagementSystem>(6);
+            Container.BindExecutionOrder<SkillSystem>(6);
+            Container.BindExecutionOrder<UIManagementSystem>(7);
         }
     }
 }
