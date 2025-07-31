@@ -72,7 +72,6 @@ namespace _Game.Scripts.Systems
         {
             ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
             _cardPlayer = cardPlayer;
-            _currentTurnCount++;
             
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Player)
             {
@@ -82,13 +81,17 @@ namespace _Game.Scripts.Systems
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Bot)
             {
                 await _aiTurnCommandExecutor.ExecuteCommands();
+                _currentPlayerIndex++;
+                FillAITurnCommands();
             }
             else
             {
                 await _playerTurnCommandExecutor.ExecuteCommands();
+                _currentPlayerIndex++;
+                FillPlayerTurnCommands();
             }
             
-            if (_currentPlayerIndex >= _allPlayersCount - 1)
+            if (_currentPlayerIndex >= _allPlayersCount)
             {
                 if (_currentTurnCount >= _turnConfig.MaxTurnsBeforeGameEnd)
                 {
@@ -96,16 +99,10 @@ namespace _Game.Scripts.Systems
                     return;
                 }
 
+                _currentTurnCount++;
                 _combatSystem.ResolveCombat();
                 _currentPlayerIndex = 0;
             }
-            else
-            {
-                _currentPlayerIndex++;
-            }
-
-            FillPlayerTurnCommands();
-            FillAITurnCommands();
             _ = StartTurn();
         }
 

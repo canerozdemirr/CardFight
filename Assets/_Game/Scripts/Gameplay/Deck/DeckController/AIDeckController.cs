@@ -31,7 +31,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
 
         public override async UniTask PlayCard()
         {
-            int randomSecondDelay = Random.Range(0, _turnConfig.TurnDurationInSeconds);
+            int randomSecondDelay = Random.Range(0, 4);
             await UniTask.WaitForSeconds(randomSecondDelay);
             
             Cards.Card pickedCard = _cardPickStrategy.PickACard(_cardList);
