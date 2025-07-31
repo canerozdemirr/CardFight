@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using _Game.Scripts.Configs.Skills;
 using UnityEngine;
 
-namespace _Game.Scripts.Configs.Skills
+namespace _Game.Scripts.Configs.SkillConfigs
 {
     [CreateAssetMenu(fileName = "Skills Config", menuName = "CardFight/Skills Configuration")]
-    public class SkillsConfig : ScriptableObject
+    public class SkillListConfig : ScriptableObject
     {
         [Header("Available Skills")]
         [SerializeField] private List<SkillConfig> availableSkills = new();

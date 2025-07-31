@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Scripts.Configs.SkillConfigs;
 using _Game.Scripts.Interfaces.Skills;
 using _Game.Scripts.Interfaces.Systems;
 using _Game.Scripts.Interfaces.Players;
@@ -23,7 +24,7 @@ namespace _Game.Scripts.Systems
         private ICombatRegister _combatRegister;
         
         [Inject(Optional = true)]
-        private SkillsConfig _skillsConfig;
+        private SkillListConfig _skillListConfig;
         
         [Inject]
         private GenericEventBus<IEvent> _eventBus;
@@ -118,7 +119,7 @@ namespace _Game.Scripts.Systems
             var skillCopy = (ISkill)Activator.CreateInstance(skillImplementation.GetType());
             skillCopy.Initialize(targetPlayer);
             
-            Debug.Log($"Picked random skill: {skillCopy.SkillName} for owner: {skillOwner.name}, targeting: {targetPlayer.name}");
+            Debug.Log($"Picked random skill: {skillCopy.SkillName} for owner: {skillOwner}, targeting: {targetPlayer}");
             return skillCopy;
         }
 
@@ -161,9 +162,9 @@ namespace _Game.Scripts.Systems
         {
             _availableSkillConfigs.Clear();
             
-            if (_skillsConfig?.AvailableSkills != null)
+            if (_skillListConfig?.AvailableSkills != null)
             {
-                _availableSkillConfigs.AddRange(_skillsConfig.AvailableSkills);
+                _availableSkillConfigs.AddRange(_skillListConfig.AvailableSkills);
                 Debug.Log($"Populated {_availableSkillConfigs.Count} skill configurations from SkillsConfig");
             }
             else

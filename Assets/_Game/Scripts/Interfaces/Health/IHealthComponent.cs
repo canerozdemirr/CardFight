@@ -13,5 +13,6 @@ namespace _Game.Scripts.Interfaces.Health
         
         void TakeDamage(int damage);
         void Heal(int amount);
+        void SetMaxHealth(int maxHealth);
     }
 }

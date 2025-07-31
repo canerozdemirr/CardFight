@@ -8,4 +8,3 @@ namespace _Game.Scripts.Gameplay.Players
     }
 }
 
-

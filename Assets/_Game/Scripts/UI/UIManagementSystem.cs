@@ -62,15 +62,11 @@ namespace _Game.Scripts.UI
                     continue;
 
                 IUIElement uiElement = canvas.GetComponent<IUIElement>();
-                if (uiElement != null)
-                {
-                    uiElement.Initialize();
-                    _allUIElements.Add(uiElement);
-                }
-                else
-                {
-                    Debug.LogWarning($"Canvas {canvas.name} does not implement IUIElement interface.");
-                }
+                if (uiElement == null) 
+                    continue;
+                
+                uiElement.Initialize();
+                _allUIElements.Add(uiElement);
             }
         }
 
@@ -89,10 +85,6 @@ namespace _Game.Scripts.UI
                     canvas.gameObject.SetActive(true);
                 }
             }
-            else
-            {
-                Debug.LogWarning($"Canvas of type {typeof(T).Name} not found in UIManager.");
-            }
         }
 
         public void CloseUI<T>() where T : MonoBehaviour, IUIElement
@@ -109,10 +101,6 @@ namespace _Game.Scripts.UI
                 {
                     canvas.gameObject.SetActive(false);
                 }
-            }
-            else
-            {
-                Debug.LogWarning($"Canvas of type {typeof(T).Name} not found in UIManager.");
             }
         }
 
