@@ -332,6 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 1
 --- !u!212 &87340877
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -575,6 +576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &346431513
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -669,6 +671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &384950643
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1293,6 +1296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &708797158
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1595,6 +1599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &916212655
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1921,6 +1926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &1045431429
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2102,6 +2108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &1174811036
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2283,6 +2290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &1197961920
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2470,6 +2478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &1249565569
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2777,6 +2786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &1474079538
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3045,6 +3055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &1663550057
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3194,6 +3205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &1682941386
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3420,6 +3432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!1 &1934692644
 GameObject:
   m_ObjectHideFlags: 0
@@ -3567,6 +3580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &2005394098
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4831,6 +4845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!224 &4839552650531010178 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5475174136306432298, guid: 17e6bfd2e79bd6441aad658d68ff1aac, type: 3}
@@ -4996,6 +5011,10 @@ PrefabInstance:
     - target: {fileID: 225817739562497752, guid: c2462be5582f7a1419d92a81eb15f183, type: 3}
       propertyPath: m_Name
       value: DeckSelectionCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 225817739562497752, guid: c2462be5582f7a1419d92a81eb15f183, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 815331915522697822, guid: c2462be5582f7a1419d92a81eb15f183, type: 3}
       propertyPath: m_Pivot.x
@@ -5353,7 +5372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8339318502670310326, guid: 4de7e6b39c20a354faf50f003983c0cc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8947236187896777240, guid: 4de7e6b39c20a354faf50f003983c0cc, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5538,6 +5557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!212 &7011327074662957601
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5623,6 +5643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!1 &7527428600160644592
 GameObject:
   m_ObjectHideFlags: 0
@@ -5655,6 +5676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!4 &7553739586242689675
 Transform:
   m_ObjectHideFlags: 0
@@ -5764,7 +5786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4123687767830620622, guid: 2a6114535b5ee6b43a4eee20e8541fb8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5803,6 +5825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!1 &7822907245930253081
 GameObject:
   m_ObjectHideFlags: 0
@@ -5835,6 +5858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!1 &8146657854240705420
 GameObject:
   m_ObjectHideFlags: 0
@@ -5867,6 +5891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!61 &8154042233661408259
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5927,6 +5952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!1001 &8221343450950356937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5938,6 +5964,10 @@ PrefabInstance:
     - target: {fileID: 4309350241429181305, guid: 0c780567b5af77a4fa9b4e6ca723a6d2, type: 3}
       propertyPath: m_Name
       value: SkillCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309350241429181305, guid: 0c780567b5af77a4fa9b4e6ca723a6d2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4839552650743548885, guid: 0c780567b5af77a4fa9b4e6ca723a6d2, type: 3}
       propertyPath: m_Pivot.x
@@ -6116,6 +6146,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameEndCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7702619463338135968, guid: 17e6bfd2e79bd6441aad658d68ff1aac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6181,6 +6215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!1 &9209838924451828326
 GameObject:
   m_ObjectHideFlags: 0
@@ -6230,6 +6265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSpotEmpty: 1
   _occupyingCard: {fileID: 0}
+  _isSpotLocked: 0
 --- !u!223 &9213830319020628629 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 453037860934109296, guid: 17e6bfd2e79bd6441aad658d68ff1aac, type: 3}

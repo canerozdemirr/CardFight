@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: OpponentCardDefenseDebuffSkillConfig
   m_EditorClassIdentifier: 
   skillImplementation:
-    rid: 9211739927295033477
+    rid: 9211739927295033478
   references:
     version: 2
     RefIds:
-    - rid: 9211739927295033477
-      type: {class: CardAttackDebuffSkill, ns: _Game.Scripts.Skills, asm: Assembly-CSharp}
+    - rid: 9211739927295033478
+      type: {class: CardDefenseDebuffSkill, ns: _Game.Scripts.Skills, asm: Assembly-CSharp}
       data:
         _turnNumberToStayActive: 1
-        attackDebuff: 20
+        defenseDebuff: 5

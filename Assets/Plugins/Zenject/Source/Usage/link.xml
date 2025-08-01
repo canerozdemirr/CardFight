@@ -1,3 +1,15 @@
 <linker>
-    <assembly fullname="Zenject-usage" preserve="all"/>
+    <!-- Preserve everything in the Zenject assembly -->
+    <assembly fullname="Zenject" preserve="all" />
+
+    <!-- Optional: If you use Extenject instead of original Zenject -->
+    <assembly fullname="Extenject" preserve="all" />
+
+    <!-- If your installers live in other assemblies, add them too -->
+    <!-- Example: MyGame.Installers -->
+    <!-- <assembly fullname="MyGame" preserve="all" /> -->
+
+    <!-- Preserve commonly stripped attributes and reflection targets -->
+    <type fullname="Zenject.*" preserve="all" />
+    <type fullname="ModestTree.*" preserve="all" />
 </linker>

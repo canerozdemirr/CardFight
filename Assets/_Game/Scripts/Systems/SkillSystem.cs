@@ -125,17 +125,6 @@ namespace _Game.Scripts.Systems
             }
         }
 
-        public void RemoveActiveSkills(ICardPlayer skillOwner)
-        {
-            List<ISkill> skillsToRemove = _activeSkills.ToList();
-            foreach (ISkill skill in skillsToRemove)
-            {
-                RemoveSkill(skill);
-            }
-
-            _activeSkills.Clear();
-        }
-
         private ICardPlayer DetermineSkillTarget(SkillTargetType targetType, ICardPlayer skillOwner, IReadOnlyList<ICardPlayer> allPlayers)
         {
             switch (targetType)

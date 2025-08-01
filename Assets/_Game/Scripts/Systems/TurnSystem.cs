@@ -43,7 +43,7 @@ namespace _Game.Scripts.Systems
         [Inject]
         private ISkillSystem _skillSystem;
 
-        private int _currentTurnCount;
+        private int _currentTurnCount = 1;
         private int _currentPlayerIndex;
         private int _allPlayersCount;
         
@@ -74,15 +74,9 @@ namespace _Game.Scripts.Systems
         {
             ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
             _cardPlayer = cardPlayer;
-            _currentTurnCount++;
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Player)
             {
                 _skillSystem.ApplyRandomSkill(cardPlayer);
-            }
-
-            else
-            {
-                
             }
             
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Bot)
@@ -100,6 +94,7 @@ namespace _Game.Scripts.Systems
             
             if (_currentPlayerIndex >= _allPlayersCount)
             {
+                _currentTurnCount++;
                 if (_currentTurnCount >= _turnConfig.MaxTurnsBeforeGameEnd)
                 {
                     ICardPlayer winner = _combatSystem.GetWinner();
