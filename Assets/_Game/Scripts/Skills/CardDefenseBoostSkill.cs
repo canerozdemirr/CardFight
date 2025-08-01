@@ -9,10 +9,10 @@ namespace _Game.Scripts.Skills
     [Serializable]
     public class CardDefenseBoostSkill : BaseSkill
     {
-        [SerializeField] private int defenseBoost = 8;
+        [SerializeField] private int _defenseBoost = 8;
         
         public override string SkillName => "Defense Boost";
-        public override string Description => $"Increases next played card defense by {defenseBoost} points";
+        public override string Description => $"Increases next played card defense by {_defenseBoost} points";
         public override SkillTargetType TargetType => SkillTargetType.Owner;
 
         public CardDefenseBoostSkill()
@@ -26,10 +26,10 @@ namespace _Game.Scripts.Skills
                 
             foreach (Card card in targetPlayer.AllCardsInHand)
             {
-                card.AddDefensePoint(defenseBoost);
+                card.AddDefensePoint(_defenseBoost);
             }
             isApplied = true;
-            Debug.Log($"Applied {SkillName} to player: next card gets +{defenseBoost} defense");
+            Debug.Log($"Applied {SkillName} to player: next card gets +{_defenseBoost} defense");
         }
 
         public override void Remove()
@@ -39,7 +39,7 @@ namespace _Game.Scripts.Skills
                 
             foreach (Card card in targetPlayer.AllCardsInHand)
             {
-                card.AddDefensePoint(-defenseBoost);
+                card.AddDefensePoint(-_defenseBoost);
             }
             isApplied = false;
             Debug.Log($"Removed {SkillName} from player");
@@ -51,7 +51,7 @@ namespace _Game.Scripts.Skills
             {
                 // For now, this is a conceptual boost - in a full implementation,
                 // the Card class would need a modifier system
-                Debug.Log($"Defense boost applied to {card.CardData?.CardName}: +{defenseBoost} defense");
+                Debug.Log($"Defense boost applied to {card.CardData?.CardName}: +{_defenseBoost} defense");
                 
                 // Auto-remove after one use
                 Remove();

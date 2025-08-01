@@ -46,14 +46,14 @@ namespace _Game.Scripts.UI
             Hide();
         }
 
-        private void OnOpponentHealthChanged(int arg1, int arg2)
+        private void OnOpponentHealthChanged(int currentHealth, int maxHealth)
         {
-            _opponentHPText.SetText($"Opponent HP: {arg1}");
+            _opponentHPText.SetText($"Opponent HP: {currentHealth}");
         }
 
-        private void OnPlayerHealthChanged(int arg1, int arg2)
+        private void OnPlayerHealthChanged(int currentHealth, int maxHealth)
         {
-            _playerHPText.SetText($"Player HP: {arg1}");
+            _playerHPText.SetText($"Player HP: {currentHealth}");
         }
 
         public void Cleanup()

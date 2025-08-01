@@ -11,5 +11,6 @@ namespace _Game.Scripts.Interfaces.Systems
         void RemoveSkill(ISkill skill);
         ISkill PickRandomSkill(ICardPlayer skillOwner);
         void ApplyRandomSkill(ICardPlayer skillOwner);
+        void OnTurnEnd();
     }
 }

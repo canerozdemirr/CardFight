@@ -27,6 +27,9 @@ namespace _Game.Scripts.Systems
         
         [Inject]
         private GenericEventBus<IEvent> _eventBus;
+        
+        [Inject]
+        private DiContainer _diContainer;
 
         public IReadOnlyList<ISkill> ActiveSkills => _activeSkills;
 
@@ -41,13 +44,6 @@ namespace _Game.Scripts.Systems
 
         public void Dispose()
         {
-            List<ISkill> skillsToRemove = _activeSkills.ToList();
-            foreach (ISkill skill in skillsToRemove)
-            {
-                RemoveSkill(skill);
-            }
-            
-            _activeSkills.Clear();
             _availableSkillConfigs.Clear();
             _eventBus.UnsubscribeFrom<OnSkillUsed>(OnSkillUsed);
         }
@@ -112,6 +108,7 @@ namespace _Game.Scripts.Systems
             
             ISkill skillCopy = (ISkill)Activator.CreateInstance(skillImplementation.GetType());
             skillCopy.Initialize(targetPlayer);
+            _diContainer.Inject(skillCopy);
             
             Debug.Log($"Picked random skill: {skillCopy.SkillName} for owner: {skillOwner}, targeting: {targetPlayer}");
             return skillCopy;
@@ -126,6 +123,17 @@ namespace _Game.Scripts.Systems
             {
                 AddSkill(randomSkill);
             }
+        }
+
+        public void RemoveActiveSkills(ICardPlayer skillOwner)
+        {
+            List<ISkill> skillsToRemove = _activeSkills.ToList();
+            foreach (ISkill skill in skillsToRemove)
+            {
+                RemoveSkill(skill);
+            }
+
+            _activeSkills.Clear();
         }
 
         private ICardPlayer DetermineSkillTarget(SkillTargetType targetType, ICardPlayer skillOwner, IReadOnlyList<ICardPlayer> allPlayers)
@@ -171,6 +179,18 @@ namespace _Game.Scripts.Systems
         private void OnSkillUsed(ref OnSkillUsed eventData)
         {
             _pickedSkill?.Apply();
+        }
+
+        public void OnTurnEnd()
+        {
+            foreach (ISkill skill in _activeSkills)
+            {
+                skill.IncreaseTurnNumber();
+                if (skill.IsSkillLifeTimeOver())
+                {
+                    RemoveSkill(skill);
+                }
+            }
         }
     }
 }

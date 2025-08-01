@@ -6,7 +6,8 @@ namespace _Game.Scripts.Gameplay.Deck.DeckSpots
     {
         [SerializeField] private bool _isSpotEmpty = true;
         [SerializeField] private Cards.Card _occupyingCard;
-        
+        [SerializeField] private bool _isSpotLocked = false;
+        public bool IsSpotLocked => _isSpotLocked;
         public bool IsSpotEmpty => _isSpotEmpty;
         public Cards.Card OccupyingCard => _occupyingCard;
         public Vector3 Position => transform.position;
@@ -66,6 +67,16 @@ namespace _Game.Scripts.Gameplay.Deck.DeckSpots
         public void EnableSpot()
         {
             _spotCollider.enabled = true;
+        }
+
+        public void LockSpot()
+        {
+            _isSpotLocked = true;
+        }
+        
+        public void UnlockSpot()
+        {
+            _isSpotLocked = false;
         }
     }
 }

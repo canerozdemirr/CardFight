@@ -8,10 +8,10 @@ namespace _Game.Scripts.Skills
     [Serializable]
     public class PlayerHealthBoostSkill : BaseSkill
     {
-        [SerializeField] private int healthBoost = 20;
+        [SerializeField] private int _healthBoost = 20;
         
         public override string SkillName => "Health Boost";
-        public override string Description => $"Increases player health by {healthBoost} points";
+        public override string Description => $"Increases player health by {_healthBoost} points";
         public override SkillTargetType TargetType => SkillTargetType.Owner;
 
         public PlayerHealthBoostSkill()
@@ -23,18 +23,17 @@ namespace _Game.Scripts.Skills
             if (isApplied || targetPlayer?.Health == null) 
                 return;
                 
-            targetPlayer.Health.Heal(healthBoost);
+            targetPlayer.Health.Heal(_healthBoost);
             isApplied = true;
-            Debug.Log($"Applied {SkillName} to player: +{healthBoost} health");
+            Debug.Log($"Applied {SkillName} to player: +{_healthBoost} health");
         }
 
         public override void Remove()
         {
             if (!isApplied || targetPlayer?.Health == null) 
                 return;
-                
-            // Health boost is permanent once applied, cannot be removed
-            // This represents a permanent increase rather than a temporary buff
+            
+            targetPlayer.Health.TakeDamage(_healthBoost);
             isApplied = false;
             Debug.Log($"Removed {SkillName} from player (no effect - permanent boost)");
         }

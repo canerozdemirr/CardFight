@@ -2,6 +2,7 @@ using System;
 using _Game.Scripts.Interfaces.Skills;
 using _Game.Scripts.Interfaces.Players;
 using UnityEngine;
+using Zenject;
 
 namespace _Game.Scripts.Skills
 {
@@ -18,6 +19,16 @@ namespace _Game.Scripts.Skills
         [NonSerialized]
         protected bool isApplied = false;
 
+        [SerializeField] 
+        protected int _turnNumberToStayActive = 1;
+        
+        public bool IsSkillLifeTimeOver()
+        {
+            return _currentTurnNumber >= _turnNumberToStayActive;
+        }
+        
+        protected int _currentTurnNumber = 0;
+
         protected BaseSkill()
         {
             
@@ -31,5 +42,10 @@ namespace _Game.Scripts.Skills
 
         public abstract void Apply();
         public abstract void Remove();
+
+        public void IncreaseTurnNumber()
+        {
+            _currentTurnNumber++;
+        }
     }
 }

@@ -46,6 +46,9 @@ namespace _Game.Scripts.Gameplay.Cards
             if (!other.gameObject.TryGetComponent(out DeckSpot deckSpot))
                 return;
 
+            if (deckSpot.IsSpotLocked)
+                return;
+
             if (_defaultDeckSpot == null)
             {
                 if (deckSpot.TryOccupySpot(_card))

@@ -96,17 +96,19 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         public virtual void AddCardToDeck(Card card)
         {
             if (!_cardList.Contains(card))
+            {
                 _cardList.Add(card);
-
-            _eventBus.Raise(new OnPlayerCardAddedToPlayDeck(this));
+                _eventBus.Raise(new OnPlayerCardAddedToPlayDeck(this));
+            }
         }
 
         public virtual void RemoveCardFromDeck(Card card)
         {
             if (_cardList.Contains(card))
+            {
                 _cardList.Remove(card);
-            
-            _eventBus.Raise(new OnPlayerCardRemovedFromPlayerDeck(this));
+                _eventBus.Raise(new OnPlayerCardRemovedFromPlayerDeck(this));
+            }
         }
 
         public virtual async UniTask ArrangeDeck()

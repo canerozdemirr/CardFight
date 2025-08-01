@@ -76,6 +76,7 @@ namespace _Game.Scripts.Gameplay.Deck.DeckController
         private void OnPlayerTurnEnded(ref OnPlayerTurnEnded eventData)
         {
             _isCardPickedToPlay = true;
+            _playingDeckSpot.FreeSpot();
         }
     }
 }

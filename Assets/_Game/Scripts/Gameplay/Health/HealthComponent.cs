@@ -52,7 +52,11 @@ namespace _Game.Scripts.Gameplay.Health
 
         public void ResetToMaxHealth()
         {
-            _currentHealth = _maxHealth;
+            if (_currentHealth >= _maxHealth)
+            {
+                _currentHealth = _maxHealth;
+            }
+            
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
         }
     }

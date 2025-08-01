@@ -99,12 +99,14 @@ namespace _Game.Scripts.Gameplay.Deck.DeckBuilders
             foreach (DeckSpot deckSpot in _cardSpawnPoints)
             {
                 deckSpot.DisableSpot();
+                deckSpot.LockSpot();
                 deckSpot.gameObject.SetActive(false);
             }
 
             foreach (DeckSpot deckSpot in _selectedCardDeckPoints)
             {
                 deckSpot.DisableSpot();
+                deckSpot.LockSpot();
                 deckSpot.gameObject.SetActive(false);
             }
 

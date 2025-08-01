@@ -9,5 +9,7 @@ namespace _Game.Scripts.Interfaces.Systems
         void ResolveCombat();
         void AddCardToCombat(ICardPlayer cardPlayer, Card card);
         void RemoveCardFromCombat(ICardPlayer cardPlayer);
+        ICardPlayer GetWinner();
+        Card GetCardInCombat(ICardPlayer ownerPlayer);
     }
 }

@@ -1,4 +1,5 @@
 using _Game.Scripts.Interfaces.Players;
+using Zenject;
 
 namespace _Game.Scripts.Interfaces.Skills
 {
@@ -16,5 +17,7 @@ namespace _Game.Scripts.Interfaces.Skills
         void Initialize(ICardPlayer target);
         void Apply();
         void Remove();
+        void IncreaseTurnNumber();
+        bool IsSkillLifeTimeOver();
     }
 }

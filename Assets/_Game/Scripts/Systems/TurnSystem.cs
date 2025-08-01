@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Game.Scripts.Commands.CardCommands;
 using _Game.Scripts.Commands.InputCommands;
 using _Game.Scripts.Commands.TimeCommands;
 using _Game.Scripts.Commands.TurnCommands;
 using _Game.Scripts.Commands.UICommands;
+using _Game.Scripts.Events.Game;
 using _Game.Scripts.Interfaces.Commands;
 using _Game.Scripts.Interfaces.Events;
 using _Game.Scripts.Interfaces.Players;
@@ -72,10 +74,15 @@ namespace _Game.Scripts.Systems
         {
             ICardPlayer cardPlayer = _combatRegister.RegisteredPlayers[_currentPlayerIndex];
             _cardPlayer = cardPlayer;
-            
+            _currentTurnCount++;
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Player)
             {
                 _skillSystem.ApplyRandomSkill(cardPlayer);
+            }
+
+            else
+            {
+                
             }
             
             if (cardPlayer.PlayerOccupation == PlayerOccupation.Bot)
@@ -95,11 +102,11 @@ namespace _Game.Scripts.Systems
             {
                 if (_currentTurnCount >= _turnConfig.MaxTurnsBeforeGameEnd)
                 {
-                    //GAME IS FINISHED!
+                    ICardPlayer winner = _combatSystem.GetWinner();
+                    _eventBus.Raise(new OnGameEnded(winner));
                     return;
                 }
 
-                _currentTurnCount++;
                 _combatSystem.ResolveCombat();
                 _currentPlayerIndex = 0;
             }
@@ -123,6 +130,7 @@ namespace _Game.Scripts.Systems
             _playerTurnCommands.Add(new CloseUICommand<TurnCanvas>());
             _playerTurnCommands.Add(new CloseUICommand<CombatCanvas>());
             _playerTurnCommands.Add(new CloseUICommand<SkillCanvas>());
+            _playerTurnCommands.Add(new IncrementSkillTurnCountCommand());
         }
         
         private void CreateAITurnCommands()
