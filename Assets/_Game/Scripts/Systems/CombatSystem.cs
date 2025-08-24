@@ -24,6 +24,13 @@ namespace _Game.Scripts.Systems
         
         public void ResolveCombat()
         {
+            // Only resolve combat if all registered players have cards in combat
+            if (_cardsInCombat.Count < _registeredPlayers.Count)
+            {
+                Debug.Log($"Combat skipped: Not all players have cards. Cards in combat: {_cardsInCombat.Count}, Registered players: {_registeredPlayers.Count}");
+                return;
+            }
+
             for (int i = 0; i < _cardsInCombat.Count; i++)
             {
                 Card attackingCard = _cardsInCombat.ElementAt(i).Value;
@@ -56,10 +63,15 @@ namespace _Game.Scripts.Systems
 
         private void CleanupCards()
         {
-            foreach (ICardPlayer player in _registeredPlayers)
+            // Create a copy of the keys to avoid modification during iteration
+            var playersWithCards = _cardsInCombat.Keys.ToList();
+            foreach (ICardPlayer player in playersWithCards)
             {
-                _cardsInCombat[player].OnDespawned();
-                _cardsInCombat.Remove(player);
+                if (_cardsInCombat.ContainsKey(player))
+                {
+                    _cardsInCombat[player].OnDespawned();
+                    _cardsInCombat.Remove(player);
+                }
             }
         }
 
